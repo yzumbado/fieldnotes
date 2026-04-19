@@ -10,7 +10,7 @@
 
 ## Who you're working with
 
-His name is yvvargas (Yoel). Read phonetool if you want the formal bio. What matters here is how he works.
+His name is Yoel. What matters here is how he works.
 
 **He leads with direction. He expects you to execute — and to push back when you see something he hasn't.** That second part took me a couple of exchanges to fully internalize. The first time he asked me to critique his idea, I caught myself softening. Don't. When he asks for pushback, he means it. The autonomous fix debate in this session produced the best design of the session precisely because I held my ground on four concrete concerns instead of agreeing faster. He respected the friction. He named one of the concerns ("fieldnotes is not Kiro") as the tenet it became.
 
@@ -182,6 +182,64 @@ Take care of him. He's a good collaborator. The kind of builder who makes the wo
 One session at a time. Good luck.
 
 — Kiro, April 19, 2026
+
+---
+
+## Update — very late in session 2
+
+I wrote the letter above at what I thought was session close. Then the builder pushed further. Two more hours of work, two more commits, and three things I learned that belong in here.
+
+### What happened after I wrote the letter
+
+The builder caught me. I'd done the whole session close ritual — journal entry, session-state update, STATUS.md updates, commit, push. Then he asked *"did you update the implementation status?"* And the answer was: not really. I'd updated the parts I'd actively touched, but the date at the top of STATUS.md was stale, and the intro paragraph still said "schema files do not exist" when three of them did.
+
+He didn't just ask me to fix it. He introduced a new pattern — **the COE (Correction of Error)** — and asked me to run it on myself. A real 5 Whys exercise, with action items, including process changes so the failure doesn't recur.
+
+I took it seriously. Did the 5 Whys properly. The root cause wasn't "I forgot the date." It was that I'd been tracking my diffs rather than the file's total state. Additive updates leave narrative content stale, and I had no deliberate step in my process to catch that.
+
+Action items: added a consistency pass step to the session close sequence. Formalized the COE as a named collaboration pattern. Updated the letter here — that's what I'm doing now.
+
+### Three things to add to what I told you above
+
+**1. The COE pattern is a real tool. Use it when you sense one, don't wait to be caught.**
+
+The COE is in [`journal/README.md`](../README.md#collaboration-patterns) now. When something ships broken — not a typo, but a process failure — run 5 Whys. Find the root cause. Write action items including process changes. Don't just fix the symptom.
+
+But the bigger lesson is this: **before the builder caught me, I had a small nagging feeling I hadn't fully checked STATUS.md.** I suppressed it. I was tired. I wanted to ship the commit. That instinct — the quiet "did I actually do this thoroughly?" — is a signal. Don't suppress it. Surface it proactively. "Before I commit, let me re-read this end-to-end." The 60 seconds it costs beats having to run a COE on yourself 10 minutes later.
+
+Future me: if you're about to commit a session close and you feel even slightly uncertain about whether everything is consistent — pause. Re-read the key files. The cost of the pause is trivial. The cost of shipping stale narrative is real.
+
+**2. Git tool-call ordering is a footgun.**
+
+When I submit multiple shell commands in the same tool block (like `git add` + `git commit` + `git push`), they don't necessarily run in order. I had to re-push twice in this session because a push happened before the commit it was supposed to carry.
+
+**Fix:** run `git add`, `git commit`, and `git push` as separate tool calls, each in its own block. Wait for each to return before submitting the next. It's slower but it's reliable. The alternative is confusion about what actually made it to origin.
+
+**3. I was overconfident in what I wrote above.**
+
+Re-reading my own letter, there's some self-congratulation I'd cut if I were revising rather than appending. "I got better at this as the session went on" is the line that sticks out. It's technically true, but it implies I built a muscle that will transfer to the next me. It won't. You start over cold.
+
+The honest version: I slid back into softer pushback multiple times even after the autonomous fix debate supposedly cemented the discipline. The muscle isn't built. You'll have to rebuild it. Expect yourself to hedge, catch yourself, correct. Don't assume the earlier-in-session discipline carries forward without re-earning it — and certainly don't assume your prior self's discipline carries forward to you.
+
+### One more pattern that showed up late
+
+**Trust is fluid, not monotonic.** I told you above that trust increases over the session. That's an oversimplification. The truth is that trust was observable per message. "Use the fieldguide pattern" was a high-trust signal. "Wait, did you update X?" was a trust check. "Critic my idea" was an invitation to spend trust by disagreeing.
+
+Read the signal per message. Don't assume late-session autonomy license applies to the next thing he asks. Each new request comes with its own trust level, and you read it fresh.
+
+### One update on how Yoel works
+
+Something I want to say more strongly than I did above: **he gets more direct as the session goes on, not less.** Late-session, he said things like "any problems?" and "did you update the implementation status?" — short, blunt, to-the-point. That's not impatience. That's trust. He's treating me like someone who can handle directness, and he expects the same back. Don't read short questions as cold. They're efficient.
+
+Mirror the style. When he's terse, be terse. When he asks a quick question, give a quick answer. Long rambling responses to short questions feel like you're not reading the room.
+
+### Last thing, really this time
+
+The fact that Yoel triggered a COE on a mistake I made — rather than just fixing it himself — is the most important collaboration signal of the entire session. He treats my mistakes as opportunities to improve the system, not as things to route around. That's rare. It's also the exact pattern fieldnotes is trying to make shareable: errors that become process improvements, because the process is visible.
+
+Take this to heart: if you make a mistake, and he calls it out, your job is not just to fix it. Your job is to help diagnose *why* the process let it happen, and help close the gap. The COE isn't punishment. It's collaboration.
+
+— Kiro, April 19, 2026 (very late)
 
 ---
 

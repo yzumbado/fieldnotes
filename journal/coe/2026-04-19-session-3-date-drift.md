@@ -1,7 +1,7 @@
 # COE — Session-3 Date Drift
 
 **Opened:** 2026-04-19 (session 3, during post-close re-check)
-**Status:** Open
+**Status:** Closed
 **Last status change:** 2026-04-19
 
 ## The failure

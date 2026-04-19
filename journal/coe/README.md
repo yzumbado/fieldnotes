@@ -39,7 +39,7 @@ No COE skips `In progress`. Even if all action items are completed in the same s
 | Date opened | COE | Status | Last update |
 |---|---|---|---|
 | 2026-04-19 | [Requirements-to-schema drift](2026-04-19-requirements-to-schema-drift.md) | Closed | 2026-04-19 |
-| 2026-04-19 | [Session-3 date drift](2026-04-19-session-3-date-drift.md) | Open | 2026-04-19 |
+| 2026-04-19 | [Session-3 date drift](2026-04-19-session-3-date-drift.md) | Closed | 2026-04-19 |
 
 ---
 

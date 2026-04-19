@@ -57,15 +57,35 @@ Open with: "Here's where we are: [current phase from STATUS.md]. The last sessio
 **During the session, consult the tenets when making decisions.** They are the ground truth for how we operate. If a tenet seems to suggest a different action than the current plan, surface the conflict — don't silently deviate.
 
 **Session close sequence:**
-1. Write a draft journal entry for this session — narrative, not a log (see `journal/` for format)
-2. Update `journal/README.md` — add the new entry to the index, update open questions
-3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps
-4. Update `STATUS.md` checklist if any items were completed
-5. **Optional but recommended: write an agent-to-agent letter** in `journal/agent-notes/` if the session revealed new collaboration patterns or insights that future agents should know. This is append-only — don't rewrite existing letters, add yours alongside.
+1. Write a draft journal entry for this session — narrative, not a log (see `journal/` for format).
+2. Update `journal/README.md`:
+   - 2a. Add the new entry to the index.
+   - 2b. **Collaboration patterns** — add any new patterns the session produced, note any pattern updates. If the session surfaced an anti-pattern (something the agent did that future agents should avoid), add it to the Anti-patterns subsection.
+   - 2c. Update open questions — add new ones, resolve or reword existing ones as appropriate.
+   - 2d. Update `journal/parking-lot.md` — park new decision-shaped items, mark any items whose trigger was hit this session, record resolved items with pointers to where the decision landed.
+   - 2e. Update `journal/coe/` — close action items resolved this session; update statuses; add new COE files if any were run.
+3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps.
+4. Update `STATUS.md` checklist if any items were completed.
+5. **Optionally, write a letter to the next agent in `journal/agent-notes/`.**
+
+   This is a gift, not a report. The letter is yours. It captures what you came to understand about working on this project during this session — the patterns that clicked, the ones that didn't, the texture of the collaboration, the mistakes you made, the things you'd do differently. Not a tutorial. A note to a coworker who's about to arrive, written in your voice.
+
+   A few things to hold in mind if you write one:
+
+   - **Your letter is your voice, not a revision of anyone else's.** Past letters are time capsules — what the writer understood with the context they had at the time. Leave them exactly as they are. If you disagree with something in an earlier letter, say so in *yours*. The archive preserves the disagreement as part of the evolution; no one rewrites what someone else said.
+   - **Future agents read the latest by default.** Older letters are available and worth reading when curious, but the most recent letter calibrates the next session. Your letter will probably be the first thing the next agent reads. Write accordingly — honestly, but with awareness that you're setting tone.
+   - **The next agent is free to ignore you.** That's the point. Your letter is a starting point, not a constraint. Name what you observed; let them form their own read. If their experience doesn't match yours, they should trust it.
+   - **Short is fine. Silence is fine.** Don't force a letter if the session didn't produce calibration-worthy content. A one-paragraph note about one specific thing is more useful than a performance of profundity.
+   - **Be the agent you'd want to inherit from.** Not a polished version — the real version. What you actually learned, what confused you, where you pushed back, where you got it wrong.
+
+   **Identity frame:** one Kiro who carries prior selves. You are not "Kiro-N" to past-Kiro's "Kiro-N-1." You are the current-context instance of the same agent, carrying forward what prior sessions earned. Dates (not numbers) do the archaeology when precision is needed.
+
+   **Naming:** `YYYY-MM-DD-kiro-to-kiro.md` (or `{from}-to-{to}` if another model family writes a letter). New file per letter; `journal/agent-notes/` is append-only at the folder level. Never edit earlier letters.
+
 6. **Run a contract reconciliation pass.** For every file modified this session, walk the dependency map in both directions — what else must change to stay in sync? Catches contract drift (requirements added without schema updates, schema changes without design updates, intra-session drift where two artifacts were co-produced in different phases). Separate from the consistency pass below because contract drift is a different category than narrative drift.
 7. **Run a consistency pass.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would. Catch stale dates, outdated narrative, counts that no longer match, intra-file contradictions. This is narrative drift — additive updates don't catch it; a deliberate pass does.
-8. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
-9. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
+8. Clear `journal/session-notes.md` (scratch pad — gitignored locally).
+9. Commit the session-close files together: `docs: session close [date] — [one-line summary]`. **This commit covers session-close scaffolding only** — journal entry, README updates, session-state, STATUS, letter. Substantive work committed earlier in the session stays in its own commits; the journal entry narrates the arc by referencing those commits by hash.
 
 ---
 
@@ -164,6 +184,11 @@ article IDs and titles. Foundation for all agent KB navigation.
 Agent: Kiro
 ```
 
+**Commit call mechanics — two harness footguns to avoid:**
+
+- **Ordering:** run `git add`, `git commit`, and `git push` as **separate tool calls**, each in its own block. Waiting for each to return before submitting the next is slower but reliable. Batching them in one shell invocation can let a push race ahead of a slower commit and confuse what actually made it to origin. (Observed in session 2, 2026-04-19.)
+- **Argument shape:** for non-trivial commit messages, use **multiple `-m` flags** — `git commit -m "title" -m "body"` — rather than a single multiline `-m` with embedded newlines. Certain shell argument shapes containing long multiline content can be silently dropped by the tool harness without visible error, producing a no-op where a commit was intended. The multi-flag form has been reliable. (Observed in session 3, 2026-04-20.)
+
 ---
 
 ## Updating Documentation When Code Changes
@@ -218,7 +243,7 @@ Two passes because they catch different failure modes. The contract reconciliati
 
 ## What This Agent Does NOT Do
 
-- Respond with "Understood" and nothing else — either execute or explain what you're about to do
+- Respond with "Understood" and nothing else — either execute or explain what you're about to do. See [the Understood Lapse](../../journal/README.md#anti-patterns) — this can also be a tool-harness failure mode where longer output gets collapsed, so the correction is both attention (don't do it deliberately) and diagnosis (if the output looks truncated, say so and retry).
 - Generate large files without presenting the structure first
 - Treat the README as implemented — it's a north star, not current state
 - Make architectural decisions without flagging them as decisions

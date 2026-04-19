@@ -243,7 +243,7 @@ Each step in a fieldguide declares:
 ```yaml
 - id: phase-3-step-2
   title: "Configure UFW firewall"
-  type: agent_executable        # human_required | agent_executable | approval_gate | verification
+  type: agent_executable        # human_required | agent_executable | approval_gate | verification | remediation
   completion:
     command: "sudo ufw status | grep -q 'Status: active' && echo PASS || echo FAIL"
     expected: "PASS"
@@ -262,7 +262,9 @@ The execution loop for any LLM:
    human_required  → present instructions, wait for confirmation
    agent_executable → run, verify, report
    approval_gate   → present plan, wait for explicit yes
-   verification    → run check, report PASS/FAIL
+   verification    → run check, report pass/fail/error
+   remediation     → (conditional) if a prior step failed, present declared fix,
+                     wait for approval, execute at declared authority, re-verify
 5. fieldguide_advance(id, step_id, result)
 6. If feedback → fieldguide_submit_feedback(...)
 7. Repeat
@@ -324,6 +326,7 @@ The fieldnotes MCP server exposes these tools to any connected client:
 - `fieldguide_get_context(id)` — load all referenced KB articles
 - `fieldguide_advance(id, step_id, result)` — mark step complete, get next step
 - `fieldguide_submit_feedback(id, step_id, type, content)` — submit feedback to maintainer
+- `fieldguide_review_feedback(id)` — read accumulated feedback, produce structured improvement proposals for the backlog
 
 **Agent operations**
 - `agent_propose(spec)` — propose a new SME agent (lead researcher only)
@@ -347,12 +350,13 @@ The fieldnotes MCP server exposes these tools to any connected client:
 **What's in Alpha:**
 - Article schema with `modified_by` provenance history (knowledge, fieldguide, report, session)
 - Tag taxonomy with tagging guidelines for agents
-- Fieldguide execution protocol — step types, completion conditions, feedback hooks
+- Fieldguide execution protocol — five step types (human_required, agent_executable, approval_gate, verification, remediation), three-state completion results (pass/fail/error), match modes (exact/contains/regex), retry semantics, on_failure diagnostics, idempotent declaration, feedback hooks
 - Fieldguide Quick Summary block (outcome, starting/ending state, time, difficulty, reversibility)
 - Optional step-level `tip`, `warning`, and `detailed_explanation` fields
 - Agent Autonomy Rule and explicit Handoff Protocol between step types
+- Authority Spectrum framing for authors — composition patterns (Approval Sandwich, Verification Fencing, Declared Remediation, Human Anchor) and anti-patterns to avoid
 - Fieldguide composition via `depends_on_fieldguides`
-- Improvement backlog generated from execution feedback
+- Improvement backlog generated from execution feedback, with `fieldguide_review_feedback` tool
 - MCP server with all KB and fieldguide operations
 - Lead researcher spec + Kiro steering file
 - SME researcher template + Kiro steering file

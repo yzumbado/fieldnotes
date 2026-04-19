@@ -116,6 +116,52 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ---
 
+### 2026-04-20 — Session-close routine as its own fieldguide
+
+**Summary:** The session-close routine currently lives in `.kiro/steering/fieldnotes-dev.md` as procedural steps. Structurally, that's a fieldguide — numbered steps, declared order, verification passes, completion conditions. The question: should it be promoted to an actual fieldguide once the MCP server and fieldguide infrastructure exist? If yes, is it the *first* fieldguide in the bootstrap KB?
+
+**Context at parking:** Surfaced in session 3 while auditing the session-close routine before running it. The routine has been growing — six sub-steps originally, then seven with the consistency pass (COE #1), then nine with the contract reconciliation pass and step-2 sub-steps (COE #2 + today's audit). Framing it as a fieldguide would make the growth tractable: steps become declarative, verification becomes programmatic, the "two passes at session close" become verification and remediation steps in the fieldguide's vocabulary.
+
+**What we know:**
+- The routine is structurally a fieldguide already. It has steps, order, verification, and completion.
+- It currently lives in a steering file because no fieldguide infrastructure exists yet.
+- If the bootstrap decision lands on Option B (fieldnotes-building-itself), the session-close routine is a natural candidate for the *first* fieldguide in the bootstrap KB — demonstrating the framework against itself.
+- Keeping it in the steering file indefinitely is also viable; steering is where behavioral rules live, and the routine is behavioral.
+
+**What we don't know yet:**
+- Whether the fieldguide format is expressive enough to carry the routine without loss (the letter-writing step is notably soft and open-ended; that kind of "optional with voice permission" might not fit a protocol-level schema cleanly).
+- Whether promoting it creates a chicken-and-egg: the fieldguide needs the MCP server to be executable, but the routine is what agents run at every session close, including the sessions where we're building the MCP server.
+- Whether there's value in *both* — the routine lives in the steering file as the authoritative source, *and* a derived fieldguide exists as a demonstration.
+
+**Trigger to revisit:** After the bootstrap-vs-Big-Beta decision lands. If B, this becomes the natural first concrete fieldguide. If A, this stays in the steering file indefinitely.
+
+**Status:** Open
+
+---
+
+### 2026-04-20 — Ritual complexity watch
+
+**Summary:** The session-close routine started at six sub-steps, grew to seven, now has nine numbered steps plus sub-steps under step 2, plus a separate update list, plus two named passes (contract reconciliation, consistency). Each addition was justified by a specific failure; collectively, complexity is accumulating. At some point a ritual that takes too long starts getting shortcut. The question: at what point do we consolidate, simplify, or retire parts of the routine?
+
+**Context at parking:** Named in session 3 while auditing the routine. Not a problem yet — the routine is still legibly structured. Worth watching, not yet worth cutting.
+
+**What we know:**
+- Each addition earned its place via a COE or observed failure.
+- Additions have been additive; nothing has been removed or consolidated yet.
+- Symptoms of ritual-bloat to watch for: steps getting skipped silently, steps getting merged ad hoc without documentation, session-close time growing disproportionately to session length.
+- The routine is a candidate for becoming a fieldguide (see the adjacent parking-lot item) — which could either consolidate complexity or amplify it.
+
+**What we don't know yet:**
+- Whether the natural ceiling is higher than where we are now (maybe 9 steps is still fine for a while), or whether we're near it.
+- Whether certain steps are redundant in practice — e.g., do the two passes really catch different things, or does one subsume the other in most sessions?
+- Whether the growth rate is linear (each session adds something) or converging (we're close to covering the real failure modes).
+
+**Trigger to revisit:** When the first symptom of ritual-bloat appears — a skipped step, a silently-merged pair of steps, or a session close that takes disproportionately long. Also worth scheduled-revisit at Alpha release, before we ask external users to follow any of this.
+
+**Status:** Open
+
+---
+
 ## Resolved items
 
 *(None yet.)*

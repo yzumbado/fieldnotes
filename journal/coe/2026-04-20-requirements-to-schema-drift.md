@@ -106,3 +106,30 @@ A few things worth naming about executing this COE.
 **The COE was cheap.** Four tool calls for evidence, roughly ten minutes of analysis. COE #1 took longer because the pattern was being invented; COE #2 benefited from the template. Running COEs will get cheaper, which makes the bar for triggering one lower. That's a good direction — more COEs, smaller each time, fewer systemic failures leaking through.
 
 **Both COEs so far point at the same meta-pattern.** COE #1 found that the session-close ritual wasn't calibrated to catch narrative drift until the consistency pass was added. COE #2 found that the consistency pass now catches narrative drift reliably but doesn't catch contract drift. Each ritual we add generalizes only against the failure mode it was born from. Worth watching: if COE #3 finds another category of drift not covered by either pass, the meta-pattern becomes "one ritual per failure mode" — which eventually becomes unwieldy. At that point we'd want a more general principle, not more specific passes. Not urgent, but worth noting.
+
+### Follow-up observation — second instance of the same failure class
+
+While running the consistency pass during session 3's close (2026-04-20), a second instance of the same intra-session co-production drift surfaced: **Req 13 criterion 3** said the example fieldguide must demonstrate "at least one step of each execution type: `human_required`, `agent_executable`, `approval_gate`, and `verification`" (four types) — but Req 18 (added in the same session 2 commit) introduced `remediation` as a fifth step type. Req 13 was not updated to reflect Req 18's addition.
+
+Same failure class as the fieldguide-format drift: two requirements were co-produced in the same session, and the later addition didn't prompt an update to the earlier one. Both Req 13 and Req 18 landed in commit `71a6cea`. The COE's original finding and action items cover this case — the contract reconciliation pass would have caught it at session 2's close if the pass had existed then.
+
+**Fix applied** during session 3's close (commit pending at time of writing):
+- Req 13 criterion 3 updated to list all five step types including `remediation`.
+- `STATUS.md` Example KB checklist item updated to match.
+
+**Why this matters for the COE:** the consistency pass surfaced the drift on its first real run after the COE's action items landed. That's evidence the pass works — it caught a real instance of contract drift between specs and status narrative. It's also evidence that contract drift is a recurring failure class, not a one-off, which validates the structural action items. The pattern is now observed twice in the same commit; any future requirements-expansion session should explicitly walk the full requirements file looking for dependent criteria that need updating.
+
+**Third instance surfaced on continued reading.** `README.md` (the north-star document) also showed the four-step-type list in two places: the inline comment on the fieldguide example's `type` field, and the execution loop description. Both predated Req 18 and had not been updated. Fixed during the same close pass: the `type` comment now lists all five step types; the execution loop description now includes the conditional remediation path and uses the three-state pass/fail/error vocabulary instead of the old PASS/FAIL.
+
+**Pattern, stated plainly:** one session-2 commit (`71a6cea`) introduced Req 18 and created `schema/fieldguide-format.md` simultaneously, and the four-step-type language was repeated in at least three distinct places across specs, schema narrative, and north-star documentation. None of those places were updated to reflect the new fifth step type. The contract reconciliation pass added by this COE's structural action items is what would have caught this at session 2's close; the consistency pass is what caught the residue at session 3's close. Both passes earning their keep, together, on the first run.
+
+**Continued reading found still more drift from the same commit.** By the end of the consistency pass, six total instances of stale narrative from commit `71a6cea` had been found and fixed:
+
+1. Req 13 criterion 3 — four-step-type list (missed `remediation`).
+2. `STATUS.md` Example KB checklist item — same wording.
+3. `README.md` fieldguide example `type` comment — same wording.
+4. `README.md` execution loop — four-type description plus old PASS/FAIL language.
+5. `README.md` MCP tools reference — missing `fieldguide_review_feedback` (added in Req 5 session 2).
+6. `README.md` "What's in Alpha" bullets — generic "step types, completion conditions, feedback hooks" description that didn't reflect Req 17's match modes / retry / on_failure / idempotent or Req 18's `remediation` step type, and didn't reference the Authority Spectrum framing added to the schema this session.
+
+Six instances, one commit of origin, zero of them caught between session 2's close and session 3's opening. The consistency-pass-as-new-reader frame is what surfaced them — reading the files end-to-end looking for "claims that were true at session start but aren't now" is exactly what was needed.

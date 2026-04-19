@@ -260,7 +260,7 @@ For the project's belief system, see [PHILOSOPHY.md](../PHILOSOPHY.md). For oper
 
 1. THE Framework_Repo SHALL include a minimal example KB in `examples/minimal-kb/` containing at least one `knowledge` article and one `fieldguide` article.
 2. THE example knowledge article SHALL demonstrate all required frontmatter fields, all required sections, a populated `sources` list, and a non-empty Changelog.
-3. THE example fieldguide SHALL demonstrate at least one step of each execution type: `human_required`, `agent_executable`, `approval_gate`, and `verification`.
+3. THE example fieldguide SHALL demonstrate at least one step of each execution type: `human_required`, `agent_executable`, `approval_gate`, `verification`, and `remediation`.
 4. THE example fieldguide SHALL include a `kb_references` list pointing to the example knowledge article, demonstrating the cross-reference pattern.
 5. THE example KB SHALL include a `fieldnotes.yml` configuration file with all required fields populated.
 6. THE example KB SHALL be valid against the Schema — THE MCP_Server SHALL be able to start with `--kb-path examples/minimal-kb` and serve all example articles without errors.

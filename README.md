@@ -6,6 +6,9 @@
 
 > This is Alpha. It works. It is not finished. We are building it by using it.
 
+> **Development note:** This README is a working-backwards document — written as if Alpha is complete, to define what we're building before we build it. It is the north star, not the current state. For real implementation status, see [STATUS.md](STATUS.md).
+
+
 ---
 
 ## What is fieldnotes?
@@ -47,6 +50,26 @@ Built because the problem was real, not because it seemed like a good idea in th
 Field notes are what researchers write when they're actually in the field — raw observations, half-formed ideas, things that need follow-up. They're not polished. They're not final. But they're real, they're dated, and they're the foundation that everything else gets built on.
 
 That's the spirit here. Knowledge earned while doing something real, organized well enough to be useful later, maintained by agents who know what they're responsible for.
+
+---
+
+## How this is being built
+
+fieldnotes is being developed using the same human-AI collaboration model it's designed to support.
+
+The human sets direction and makes final decisions. The agent brings technical depth, research, structure, and execution. Every major decision in this repo — the two-repo model, the fieldguide execution protocol, the agent hierarchy — came from a conversation, not a solo design session.
+
+**The process:**
+1. Problem identified through real work — two AI-assisted projects with no way to share knowledge
+2. Working-backwards README written first — the north star before any code
+3. Requirements derived from the README, grounded in real projects
+4. Design, then implementation, then validation against the original README
+
+**The planning discipline:** before any non-trivial document or design is written, the structure is presented as bullet points and reviewed. The full content only gets written after the structure is approved. This keeps the work aligned and avoids large rewrites.
+
+The commit history tells this story. Every commit message explains what changed, why, and what it enables — including which AI agent produced it.
+
+For the agent collaboration guide, see [`.kiro/steering/fieldnotes-dev.md`](.kiro/steering/fieldnotes-dev.md).
 
 ---
 

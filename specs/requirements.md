@@ -36,6 +36,8 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 - **Feedback**: Structured observations submitted during fieldguide execution — corrections, timing notes, alternative approaches, issues encountered.
 - **Audit**: The process of reviewing a knowledge article to verify its facts are still current.
 - **Tag**: A structured metadata field in article frontmatter used for search and classification.
+- **Modified_By**: An optional append-only list in article frontmatter recording every agent that created or modified the article, with date and action.
+- **Backlog**: A structured, append-only file co-located with a fieldguide that tracks improvement items derived from execution feedback. Human-triaged in Alpha.
 
 ---
 
@@ -71,6 +73,8 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 8. WHEN the article type is `knowledge`, THE Schema SHALL require Facts, Decisions & Rationale, Known Issues, and Open Questions sections between Summary and Changelog.
 9. THE Schema SHALL be additive-only — new fields SHALL always be optional, and no field SHALL be removed or renamed in a way that invalidates existing articles.
 10. THE Schema SHALL require the `agent` field to record the name and version of the agent that last modified the article, in the format `agent-name/vX.Y`.
+11. THE Schema SHALL allow an optional `modified_by` list in the frontmatter, where each entry contains an `agent` name/version, a `date`, and an `action` (one of: `created`, `updated`). THE list SHALL be append-only — entries SHALL NOT be removed or reordered.
+12. WHEN the `modified_by` field is present, THE MCP_Server SHALL append a new entry to it on every `kb_create` or `kb_update` operation, recording the acting agent, the current date, and the action performed.
 
 ---
 
@@ -119,6 +123,8 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 5. WHEN `fieldguide_advance` is called and the completed step is the last step in the fieldguide, THE MCP_Server SHALL update the Session document status to `complete` and record the completion time.
 6. THE MCP_Server SHALL expose a `fieldguide_submit_feedback` tool that accepts a fieldguide `id`, a `step_id`, a `type` (one of: `correction`, `timing`, `alternative_approach`, `issue`), and a `content` string, and appends the feedback to a feedback file co-located with the fieldguide.
 7. WHEN `fieldguide_advance` is called with a `step_id` that does not exist in the fieldguide, THE MCP_Server SHALL return an error and SHALL NOT modify the Session document.
+8. THE MCP_Server SHALL expose a `fieldguide_review_feedback` tool that accepts a fieldguide `id`, reads the accumulated feedback file, groups feedback by step and type, and returns a structured list of improvement proposals — each containing the `step_id`, a summary of the feedback, a proposed change description, the source feedback IDs, and a confidence level (`high`, `medium`, `low`).
+9. WHEN `fieldguide_review_feedback` produces improvement proposals, THE MCP_Server SHALL write them as entries to a backlog file co-located with the fieldguide. THE backlog file SHALL be append-only and human-triaged in Alpha.
 
 ---
 
@@ -180,7 +186,7 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 
 #### Acceptance Criteria
 
-1. THE SME_Researcher SHALL sign every article it creates or modifies by setting the `agent` frontmatter field to its name and version in the format `agent-name/vX.Y`.
+1. THE SME_Researcher SHALL sign every article it creates or modifies by setting the `agent` frontmatter field to its name and version in the format `agent-name/vX.Y`, and SHALL append an entry to the article's `modified_by` list recording its name/version, the current date, and the action performed.
 2. WHEN an SME_Researcher creates a new knowledge article, THE SME_Researcher SHALL populate all required Schema fields, set `status` to `draft`, and set `audit_due` based on the article's volatility.
 3. THE SME_Researcher SHALL only create or modify articles within its declared domain — it SHALL NOT modify articles owned by a different SME_Researcher without explicit instruction from the Lead_Researcher.
 4. WHEN the Lead_Researcher requests an audit of a domain, THE SME_Researcher SHALL call `kb_audit` filtered to its domain, review each returned article, and produce an audit report as a `report` type article.
@@ -229,6 +235,10 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 4. THE Schema SHALL allow fieldguide steps to declare which feedback types they accept via an optional `feedback.types` list — WHEN a step declares accepted types, THE MCP_Server SHALL validate that submitted feedback matches one of the declared types.
 5. THE feedback file SHALL be append-only — THE MCP_Server SHALL never overwrite or delete existing feedback entries.
 6. THE Lead_Researcher, WHILE in Doer_Mode, SHALL be able to request a feedback summary for a fieldguide by reading the feedback file and producing a structured report of findings grouped by step and type.
+7. THE MCP_Server SHALL maintain a backlog file for each fieldguide that has received feedback. THE backlog file SHALL be stored in the KB_Repo adjacent to the fieldguide and its feedback file, and SHALL be a valid YAML or Markdown file readable without special tooling.
+8. EACH backlog entry SHALL contain: a unique `item_id`, the `step_id` it relates to, a summary of the issue or improvement, a proposed change description, the source `feedback_ids`, a `priority` (one of: `high`, `medium`, `low`), a `status` (one of: `open`, `accepted`, `rejected`, `applied`), and a `created_at` timestamp.
+9. THE backlog file SHALL be append-only — THE MCP_Server SHALL NOT overwrite or delete existing backlog entries. Status changes to existing entries (e.g., `open` → `accepted`) SHALL be recorded as updates to the entry, not as deletions and re-creations.
+10. **Roadmap — post-Alpha:** THE feedback-to-improvement loop SHALL evolve toward agent-proposed fieldguide edits, where the Lead_Researcher in Doer_Mode can read the backlog, draft concrete changes to fieldguide steps, and present them to the human for approval before applying via `kb_update`. Alpha establishes the structured backlog and human triage workflow; post-Alpha automates the proposal-to-edit pipeline.
 
 ---
 

@@ -53,6 +53,7 @@ The README describes what Alpha will be — not what exists today. This file is 
 - [ ] `fieldguide_get_context` tool
 - [ ] `fieldguide_advance` tool
 - [ ] `fieldguide_submit_feedback` tool
+- [ ] `fieldguide_review_feedback` tool
 - [ ] `agent_propose` tool
 
 ### Agent Specs (Kiro implementation)
@@ -82,3 +83,13 @@ The README describes what Alpha will be — not what exists today. This file is 
 | 2026-04-18 | Four document types | knowledge, fieldguide, report, session — each has a distinct lifecycle |
 | 2026-04-18 | Fieldguide execution protocol | Any LLM with MCP access can execute a guide — no custom training needed |
 | 2026-04-18 | Agent hierarchy with human-approved growth | Lead proposes SMEs, human approves — controlled expansion |
+| 2026-04-18 | `modified_by` provenance history | Append-only list in frontmatter — queryable agent history without parsing changelogs |
+| 2026-04-18 | Fieldguide improvement backlog | Feedback → structured backlog → human triage in Alpha; agent-proposed edits post-Alpha |
+
+---
+
+## Post-Alpha roadmap
+
+| Item | Description | Depends on |
+|---|---|---|
+| Automated feedback-to-edit pipeline | Lead researcher reads backlog, drafts fieldguide step changes, presents to human for approval, applies via `kb_update` | Alpha: backlog file, `fieldguide_review_feedback` tool, human triage workflow |

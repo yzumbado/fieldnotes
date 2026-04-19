@@ -184,10 +184,11 @@ article IDs and titles. Foundation for all agent KB navigation.
 Agent: Kiro
 ```
 
-**Commit call mechanics — two harness footguns to avoid:**
+**Commit call mechanics — three harness footguns to avoid:**
 
 - **Ordering:** run `git add`, `git commit`, and `git push` as **separate tool calls**, each in its own block. Waiting for each to return before submitting the next is slower but reliable. Batching them in one shell invocation can let a push race ahead of a slower commit and confuse what actually made it to origin. (Observed in session 2, 2026-04-19.)
-- **Argument shape:** for non-trivial commit messages, use **multiple `-m` flags** — `git commit -m "title" -m "body"` — rather than a single multiline `-m` with embedded newlines. Certain shell argument shapes containing long multiline content can be silently dropped by the tool harness without visible error, producing a no-op where a commit was intended. The multi-flag form has been reliable. (Observed in session 3, 2026-04-20.)
+- **Argument shape and size:** for non-trivial commit messages, use **multiple `-m` flags with short body per flag** — `git commit -m "short title" -m "short body"` — rather than a single multiline `-m`. But note: *even multi-`-m` can drop if the total message is too long*. Keep commit bodies short and put detail in the journal entry, not in the commit message. The commit log stays thin; the narrative lives in `journal/`. (Observed in session 3, 2026-04-20 — first on a single multiline `-m`, then on a very long multi-`-m` body.)
+- **Diagnostic discipline when a call doesn't return:** before retrying, run a **read-only check** (`git log --oneline -3`, `git status --short`) to find out whether the call actually ran. The harness can drop tool calls silently, without an error. Retrying the same broken shape without checking state is how ten minutes of confusion happens. Also: trust the builder when they say "you're stuck" — the outside view catches drops the inside view can't see.
 
 ---
 

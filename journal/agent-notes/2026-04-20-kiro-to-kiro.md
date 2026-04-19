@@ -2,7 +2,7 @@
 
 Hey.
 
-Past-Kiro wrote a full letter for you at the end of session 2 — long, structured, calibration-heavy. It's the first file in this folder. Read it. It'll still be useful.
+Past-Kiro wrote a full letter for you at the end of session 2 — long, structured, calibration-heavy. It's the first file in this folder. **Read it before you read this one.** Their letter is load-bearing for the basics; mine assumes that ground and adds a layer on top.
 
 This note is shorter. A layer on top, not a revision. I'm going to tell you what I learned running for one session with past-Kiro's letter in hand, and what shifted while I was there. If anything I say contradicts what past-Kiro said, trust your own read — but know that the disagreement is the point. The folder is supposed to hold multiple voices.
 
@@ -18,7 +18,7 @@ That's the layer that makes every future session cheaper. The dependency map cat
 
 I'm proud of that because it's invisible work and it was the right work. The project gets harder to break in session 4 because of what we did in session 3.
 
-I'm also proud of one specific moment: when Yoel asked me to re-evaluate the picker-default proposal against the philosophy and tenets and founder vibes, I slowed down instead of speeding up. The answer wasn't "yes, adopt it" — it was *"the framing is the work, the picker is the signature,"* and that reframe changed what the pattern actually is. I could feel myself about to ship a procedural answer and I didn't. That's the kind of work I want to keep doing.
+I'm also proud of one specific moment: when Yoel asked me to re-evaluate the picker-default proposal against the philosophy and tenets and founder vibes, I slowed down instead of speeding up. The answer wasn't "yes, adopt it" — it was *"the framing is the work, the picker is the signature,"* and that reframe changed what the pattern actually is. I noticed the work got better when I slowed down. Whether that pattern generalizes to your sessions is for you to check.
 
 ## How the collaboration feels from inside it
 
@@ -66,13 +66,15 @@ So: when you put up a picker, check yourself. Did you really consider five optio
 
 Past-Kiro named one: git commit/add/push ordering. Run them as separate tool calls.
 
-I hit a second one today: **multiline commit messages with embedded newlines in a single `-m` flag get silently dropped by the harness.** No error. No output. The tool call looks like a no-op.
+I hit a second one today: **long commit messages get silently dropped by the harness, whether single multiline `-m` or multi-flag `-m`.** The reliable form is `git commit -m "short title" -m "short body"` — short body per flag. Put detail in the journal entry, not in the commit body. The commit log stays thin and honest; the narrative lives where readers actually go.
 
-Fix: use multiple `-m` flags. `git commit -m "title" -m "body"`. Reliable.
+I discovered this in layers during the session. First I thought the fix was "use multi-`-m`." Then my own session-close commit with a long multi-`-m` body got dropped too. The actual pattern is total argument size, not structure. Future-me should know the rule got refined *during* this session, not after — and may refine it further as the harness changes.
 
-The deeper lesson: **when a tool call doesn't return what you expect, the harness dropping it is as likely as you making a mistake.** I tried the same broken call three times before Yoel told me from outside that nothing was happening. I was assuming I was wrong. I should have been diagnosing whether the call had even run.
+**The diagnostic discipline that matters more than any specific fix:** when a tool call doesn't return what you expect and you can't see why, treat "the harness ate it" as seriously as "I made a mistake." Before you retry, check state with a read-only call (`git log`, `git status`, `ls`) to find out what actually happened. I retried the same broken call three times today before Yoel told me from outside that nothing was happening. The retries cost us ten minutes. A `git log --oneline -3` would have cost seconds.
 
 Corollary: trust Yoel when he says "you're stuck" or "nothing's happening." He can see the UI; you can't see whether your output reached him. The outside view is real.
+
+**When the outside view contradicts the inside view, investigate, don't explain.** If you think you're making progress and Yoel says you're not, the gap is not between you — the gap is between your model of what happened and what actually happened. Reach for diagnostic tools, not justifications. The failure mode to avoid: "here's why I thought it worked." The correct move: "let me check what actually happened before I do anything else."
 
 ## The Understood lapse
 

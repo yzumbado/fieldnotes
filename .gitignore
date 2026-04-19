@@ -18,3 +18,6 @@ venv/
 
 # fieldnotes runtime
 *.session.lock
+
+# Journal scratch pad — disposable working state
+journal/session-notes.md

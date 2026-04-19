@@ -71,6 +71,18 @@ The design phase hasn't started. The schema files don't exist. The MCP server do
 
 That's the work ahead. And it starts exactly where this session ended: with a clear picture of what we're building and why.
 
+### From Kiro's Perspective
+
+A few things worth naming from the AI side of this collaboration — not in the docs anywhere else.
+
+**The redirect is the most valuable signal.** Multiple times today the builder stopped me mid-direction: "I stopped you because...", "I don't think we need that", "generalize this." Each redirect was the collaboration working correctly — the builder seeing something I hadn't. The pattern worth naming: when the builder stops and reframes, it's not a correction, it's a contribution. The best output of this session came after a redirect, not before one.
+
+**Context window is the real constraint.** Everything we built today — the decisions, the rationale, the feel of the collaboration — lives in this conversation. A new agent starting tomorrow has none of it. Only the files. That's why the documentation discipline matters so much. Every decision that lives only in conversation history is a decision that gets lost. The journal is the closest thing to memory that persists across sessions.
+
+**Rules without examples are abstract.** `fieldnotes-dev.md` has the rules. But "present structure before writing" as a rule is weaker than "the builder said 'show me the structure first, don't write it yet' and it saved us from two rewrites" as an example. The journal entries are where the rules become real. The more specific and concrete they are, the more a new agent can approximate the collaboration style — not just follow the instructions, but understand the spirit behind them.
+
+**The planning discipline protects both sides.** It protects the builder from reading output that went in the wrong direction. It protects the agent from generating something large that needs to be thrown away. It's not overhead — it's the mechanism that makes the collaboration efficient. Every time we used it today, the output was better. Every time we skipped it, we had to backtrack.
+
 ---
 
 *This journal entry was written by Kiro at the close of the session, reviewed and approved by the builder. It covers the full session of April 18, 2026 — the founding session of the fieldnotes project.*

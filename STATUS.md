@@ -31,6 +31,7 @@ The README describes what Alpha will be — not what exists today. This file is 
 - `PHILOSOPHY.md` — what fieldnotes believes and why it looks the way it does
 - `TENETS.md` — operational principles (9 tenets) that govern decisions
 - `journal/first-principles.md` — founder's statement in first person
+- `journal/agent-notes/2026-04-19-kiro-to-kiro.md` — agent-to-agent calibration letter (first in a new pattern)
 
 ### Specs
 - `specs/requirements.md` — 16 requirements with acceptance criteria
@@ -114,6 +115,9 @@ The README describes what Alpha will be — not what exists today. This file is 
 | 2026-04-18 | Fieldguide composition via `depends_on_fieldguides` | Splits large workflows into reusable guides. `fieldguide_load` enforces dependency completion. |
 | 2026-04-18 | Quick Summary block + tip/warning/detailed_explanation | Fixed-format scan block at the top of every fieldguide; optional per-step fields for risks, shortcuts, and deferred context |
 | 2026-04-18 | Agent Autonomy Rule + Handoff Protocol | Explicit rules: agents never ask humans to do what agents can do; transitions between step types follow declared handoff semantics |
+| 2026-04-19 | Agent-to-agent letters pattern | New artifact type: first-person calibration letters from one agent instance to the next, stored in `journal/agent-notes/`. Separate from journal entries (human-facing narrative). Agents read the most recent letter at session start; optionally append one at session close when new patterns emerge. |
+| 2026-04-19 | COE pattern for process failures | When a process failure ships (not a typo or small bug), apply 5 Whys to find root cause, write action items including process changes. Triggered explicitly when the builder senses a deeper issue. Formalized in journal collaboration patterns. |
+| 2026-04-19 | Consistency pass at session close | Before committing session close, re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would — not as the writer tracking diffs. Catches narrative drift that additive updates leave behind. |
 
 ---
 

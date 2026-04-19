@@ -60,6 +60,11 @@ What it means: agreement isn't the goal; better decisions are. When the builder 
 
 What it means: after enough collaboration, the agent has an implicit model of how the builder expresses things. When trusted to write in that voice, the agent should lean on that implicit context — not fall back to a generic tone. Works because of context depth, not style guides.
 
+**The COE** — when a process failure ships, run a 5 Whys exercise to find the root cause and write action items including process changes.
+> After STATUS.md shipped with a stale date at session close, the builder triggered a COE. The root cause wasn't "I forgot the date" — it was that the session close process had no consistency-pass step, so narrative drift left by additive updates was invisible to the agent tracking their own diffs. (2026-04-19)
+
+What it means: when something ships broken, don't just fix it. Ask "why did this happen?" five times until you reach a cause that, if addressed, would have prevented the failure. Then write action items — both the immediate fix and the process change. Use this for process failures (things that indicate a systemic gap), not for typos or small bugs. Triggered explicitly by the builder when they sense a deeper issue. The pattern itself uses the planning rule and the decision-options-with-recommendation format — structured, transparent, collaborative.
+
 ---
 
 ## Open Questions

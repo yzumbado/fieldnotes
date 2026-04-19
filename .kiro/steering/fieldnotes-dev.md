@@ -62,8 +62,9 @@ Open with: "Here's where we are: [current phase from STATUS.md]. The last sessio
 3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps
 4. Update `STATUS.md` checklist if any items were completed
 5. **Optional but recommended: write an agent-to-agent letter** in `journal/agent-notes/` if the session revealed new collaboration patterns or insights that future agents should know. This is append-only — don't rewrite existing letters, add yours alongside.
-6. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
-7. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
+6. **Run a consistency pass.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would. Catch stale dates, outdated narrative, counts that no longer match, intra-file contradictions. Additive updates don't catch drift — a deliberate pass does.
+7. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
+8. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
 
 ---
 
@@ -194,8 +195,11 @@ This file is not the journal entry. It's raw material. At session close, the jou
 
 **At session close, always update:**
 - `.kiro/steering/session-state.md` — current phase, decisions made, next steps
-- `STATUS.md` — checklist progress, current phase
-- `journal/README.md` — new entry in the index, updated open questions
+- `STATUS.md` — checklist progress, current phase, last-updated date, "what exists today"
+- `journal/README.md` — new entry in the index, updated open questions, any new collaboration patterns
+- `journal/agent-notes/` — optionally add a new letter if the session revealed patterns future agents should know
+
+**Run a consistency pass before committing session close.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would — not as the writer tracking diffs. Look for: stale dates, stale "current state" narrative, counts that no longer match (requirements, schema docs, tools), claims that were true at the start of the session but aren't anymore. Additive updates don't catch narrative drift — a deliberate pass does. If a section in one file contradicts another section in the same file, fix both.
 
 ---
 

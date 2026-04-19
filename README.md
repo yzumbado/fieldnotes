@@ -71,6 +71,14 @@ The commit history tells this story. Every commit message explains what changed,
 
 For the agent collaboration guide, see [`.kiro/steering/fieldnotes-dev.md`](.kiro/steering/fieldnotes-dev.md).
 
+**Continuing development in a new session:**
+
+When opening this project with a new agent, start with:
+
+> *"Read STATUS.md and the steering files first, then tell me where we are and what comes next."*
+
+This triggers the session startup sequence defined in `fieldnotes-dev.md`. The agent reads the current phase, the last session summary, and the next items on the checklist — then confirms its understanding before doing anything. If the agent skips this and jumps straight to action, redirect it.
+
 ---
 
 ## How it works

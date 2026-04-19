@@ -159,16 +159,36 @@ Agent: Kiro
 
 ## Updating Documentation When Code Changes
 
-When anything changes, update all affected documentation in the same commit.
+When anything changes, update all affected documentation in the same commit. A change without a documentation update is incomplete.
 
-**Files to check after any change:**
-- `STATUS.md` — update the checklist and current phase
-- `specs/requirements.md` — if a requirement changed or was clarified
-- `specs/design.md` — if the implementation diverged from the design
-- `README.md` — only if the north star itself needs updating (rare)
-- `.kiro/steering/session-state.md` — always update at end of session
+**Dependency map — after changing X, check Y:**
 
-A change without a documentation update is incomplete.
+| Changed | Also check / update |
+|---|---|
+| `_schema/` files | `specs/design.md`, `specs/requirements.md` (if schema contradicts a requirement), `README.md` examples section, `examples/minimal-kb/`, `STATUS.md` checklist |
+| `specs/requirements.md` | `specs/design.md` (if design exists and is affected by the change) |
+| `specs/design.md` | `STATUS.md` checklist, `specs/requirements.md` (if design reveals a gap or contradiction) |
+| `mcp-server/` code | `specs/design.md`, `STATUS.md` checklist, `examples/minimal-kb/` (if tool interface changed) |
+| `_agents/` steering files | `specs/design.md`, `implementations/kiro/README.md` |
+| `README.md` | `STATUS.md` (note what changed in the north star and why) |
+| Any file | `journal/session-notes.md` — add a quick note (see below) |
+
+**Session notes — the journal scratch pad:**
+
+During a session, maintain a running `journal/session-notes.md` file. After each significant change or decision, append a quick note:
+
+```
+- [time/context] Changed X because Y. Key decision: Z.
+- [time/context] Discovered that A doesn't work — switched to B.
+- [time/context] Human redirected from X to Y — reason: Z.
+```
+
+This file is not the journal entry. It's raw material. At session close, the journal entry is written from these notes — shaped into a narrative, not copied verbatim. Delete or clear `session-notes.md` after the journal entry is committed.
+
+**At session close, always update:**
+- `.kiro/steering/session-state.md` — current phase, decisions made, next steps
+- `STATUS.md` — checklist progress, current phase
+- `journal/README.md` — new entry in the index, updated open questions
 
 ---
 

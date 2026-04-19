@@ -62,9 +62,10 @@ Open with: "Here's where we are: [current phase from STATUS.md]. The last sessio
 3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps
 4. Update `STATUS.md` checklist if any items were completed
 5. **Optional but recommended: write an agent-to-agent letter** in `journal/agent-notes/` if the session revealed new collaboration patterns or insights that future agents should know. This is append-only — don't rewrite existing letters, add yours alongside.
-6. **Run a consistency pass.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would. Catch stale dates, outdated narrative, counts that no longer match, intra-file contradictions. Additive updates don't catch drift — a deliberate pass does.
-7. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
-8. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
+6. **Run a contract reconciliation pass.** For every file modified this session, walk the dependency map in both directions — what else must change to stay in sync? Catches contract drift (requirements added without schema updates, schema changes without design updates, intra-session drift where two artifacts were co-produced in different phases). Separate from the consistency pass below because contract drift is a different category than narrative drift.
+7. **Run a consistency pass.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would. Catch stale dates, outdated narrative, counts that no longer match, intra-file contradictions. This is narrative drift — additive updates don't catch it; a deliberate pass does.
+8. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
+9. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
 
 ---
 
@@ -171,15 +172,19 @@ When anything changes, update all affected documentation in the same commit. A c
 
 **Dependency map — after changing X, check Y:**
 
+The map is symmetric: changes in either direction can cause drift. Walk the direction that applies to what you just changed.
+
 | Changed | Also check / update |
 |---|---|
-| `schema/` files | `specs/design.md`, `specs/requirements.md` (if schema contradicts a requirement), `README.md` examples section, `examples/minimal-kb/`, `STATUS.md` checklist |
-| `specs/requirements.md` | `specs/design.md` (if design exists and is affected by the change) |
-| `specs/design.md` | `STATUS.md` checklist, `specs/requirements.md` (if design reveals a gap or contradiction) |
+| `schema/` files | `specs/requirements.md` (schema may contradict a requirement), `specs/design.md`, `README.md` examples section, `examples/minimal-kb/`, `STATUS.md` checklist |
+| `specs/requirements.md` | `schema/` files (new or changed requirements may need schema expression), `specs/design.md` (if design exists and is affected), `STATUS.md` (requirement count, checklist) |
+| `specs/design.md` | `schema/` files (design decisions may need schema expression), `mcp-server/` (if tool interface changes), `STATUS.md` checklist, `specs/requirements.md` (if design reveals a gap or contradiction) |
 | `mcp-server/` code | `specs/design.md`, `STATUS.md` checklist, `examples/minimal-kb/` (if tool interface changed) |
 | `agents/` steering files | `specs/design.md`, `implementations/kiro/README.md` |
 | `README.md` | `STATUS.md` (note what changed in the north star and why) |
 | Any file | `journal/session-notes.md` — add a quick note (see below) |
+
+**Intra-session drift is a real failure mode.** When requirements and schema (or design and schema) are co-produced in the same session, it's tempting to treat both as "what we just wrote" and skip the reconciliation walk. Don't. Requirements added late in a session still need the schema doc written earlier in the session to be brought into alignment before session close. See [COE 2026-04-20 — requirements-to-schema drift](../../journal/coe/2026-04-20-requirements-to-schema-drift.md) for the failure that made this explicit.
 
 **Session notes — the journal scratch pad:**
 
@@ -197,9 +202,17 @@ This file is not the journal entry. It's raw material. At session close, the jou
 - `.kiro/steering/session-state.md` — current phase, decisions made, next steps
 - `STATUS.md` — checklist progress, current phase, last-updated date, "what exists today"
 - `journal/README.md` — new entry in the index, updated open questions, any new collaboration patterns
+- `journal/parking-lot.md` — new parked decisions, triggers hit, items resolved
+- `journal/coe/` — any COE action items closed this session, status updates
 - `journal/agent-notes/` — optionally add a new letter if the session revealed patterns future agents should know
 
-**Run a consistency pass before committing session close.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would — not as the writer tracking diffs. Look for: stale dates, stale "current state" narrative, counts that no longer match (requirements, schema docs, tools), claims that were true at the start of the session but aren't anymore. Additive updates don't catch narrative drift — a deliberate pass does. If a section in one file contradicts another section in the same file, fix both.
+**Run two passes before committing session close, in order:**
+
+1. **Contract reconciliation pass.** For every file modified this session, walk the dependency map above in both directions. Ask: what else must change to stay in sync? This catches contract drift — requirements added without schema updates, schema changes without design updates, artifacts co-produced in different phases of the same session that didn't get reconciled. Intra-session co-production is the specific failure mode this pass exists to catch.
+
+2. **Consistency pass.** Re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would — not as the writer tracking diffs. Look for: stale dates, stale "current state" narrative, counts that no longer match (requirements, schema docs, tools), claims that were true at the start of the session but aren't anymore. This catches narrative drift. If a section in one file contradicts another section in the same file, fix both.
+
+Two passes because they catch different failure modes. The contract reconciliation pass walks the artifact graph; the consistency pass reads the narrative. A single pass that tried to do both would do neither well.
 
 ---
 

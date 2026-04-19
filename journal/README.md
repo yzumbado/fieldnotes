@@ -10,7 +10,7 @@ Read this to understand not just what fieldnotes is, but how it came to be.
 
 **As a human:** Read the entries in order to understand the project's evolution. The open questions section is where unresolved ideas live — good starting points for new sessions.
 
-**As an agent:** At session start, read the open questions, the collaboration patterns, and the most recent entry. Also read the most recent letter in [`agent-notes/`](agent-notes/) — it's a first-person note from the previous agent instance with calibration about the collaboration. At session close, write a draft entry for this session, update the patterns if new ones emerged, update the open questions, and optionally write your own letter in `agent-notes/` if the session produced insights worth passing forward. Commit everything as part of the session-closing commit.
+**As an agent:** At session start, read the open questions, the [parking lot](parking-lot.md), any in-progress COEs in [`coe/`](coe/), the collaboration patterns, and the most recent entry. Also read the most recent letter in [`agent-notes/`](agent-notes/) — it's a first-person note from the previous agent instance with calibration about the collaboration. At session close, write a draft entry for this session, update the patterns if new ones emerged, update the open questions and parking lot, close any COE action items that this session resolved, and optionally write your own letter in `agent-notes/` if the session produced insights worth passing forward. Commit everything as part of the session-closing commit.
 
 The journal is append-only. Entries are never edited after the session closes — they're a record of what we knew and thought at the time.
 
@@ -63,21 +63,30 @@ What it means: after enough collaboration, the agent has an implicit model of ho
 **The COE** — when a process failure ships, run a 5 Whys exercise to find the root cause and write action items including process changes.
 > After STATUS.md shipped with a stale date at session close, the builder triggered a COE. The root cause wasn't "I forgot the date" — it was that the session close process had no consistency-pass step, so narrative drift left by additive updates was invisible to the agent tracking their own diffs. (2026-04-19)
 
-What it means: when something ships broken, don't just fix it. Ask "why did this happen?" five times until you reach a cause that, if addressed, would have prevented the failure. Then write action items — both the immediate fix and the process change. Use this for process failures (things that indicate a systemic gap), not for typos or small bugs. Triggered explicitly by the builder when they sense a deeper issue. The pattern itself uses the planning rule and the decision-options-with-recommendation format — structured, transparent, collaborative.
+What it means: when something ships broken, don't just fix it. Ask "why did this happen?" five times until you reach a cause that, if addressed, would have prevented the failure. Then write action items — both the immediate fix and the process change. Use this for process failures (things that indicate a systemic gap), not for typos or small bugs. Triggered explicitly by the builder when they sense a deeper issue — or by the agent when they sense the same thing. The pattern itself uses the planning rule and the decision-options-with-recommendation format — structured, transparent, collaborative.
+
+**How to run a COE:**
+
+1. **Evidence first, hypothesis second.** Gather the raw material — git history, file contents, commit messages, timestamps — before forming a theory of what happened. Stating the hypothesis early narrows the 5 Whys to what's already suspected and produces weaker action items. The rule earned its keep on COE #2 (2026-04-20, [requirements-to-schema drift](coe/2026-04-20-requirements-to-schema-drift.md)): the pre-evidence hypothesis was directionally right but missed the structural finding that produced the strongest action item.
+2. **State the failure factually.** One or two sentences describing what shipped broken. Outcome, not cause.
+3. **Run 5 Whys grounded in evidence.** Each "why" supported by the artifacts gathered in step 1, not by memory. If a "why" cannot be answered from evidence, say so rather than guess.
+4. **Name the root cause.** The answer to the fifth "why" — if addressed, this class of failure does not recur.
+5. **Write action items.** Immediate (fix the specific failure), structural (prevent recurrence), meta (refinements to the COE pattern itself, if any). Each item carries its own status.
+6. **Archive the COE.** Every COE is written as a file in [`coe/`](coe/), named `YYYY-MM-DD-short-title.md`. The archive has a status model (Open → In progress → Closed) so future sessions can pick up action items still pending. See the [COE archive README](coe/README.md) for the file template and lifecycle.
 
 ---
 
 ## Open Questions
 
-Questions that surfaced during sessions and haven't been fully resolved yet.
+Questions that surfaced during sessions and haven't been fully resolved yet. Research-shaped: we don't yet know the options, the cost, or the answer. Decision-shaped items (concrete A-or-B with known tradeoffs and a revisit trigger) live in the [parking lot](parking-lot.md) instead.
 
 | Date | Question | From session |
 |---|---|---|
 | 2026-04-18 | What's the right name for the human collaborator in these entries? "The builder" is a placeholder — something that better captures the partnership nature. | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) |
-| 2026-04-18 | The homelab KB repo is referenced in the README but doesn't exist yet. The README now says "planned, not yet created." When is the right time to create it? | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) |
-| 2026-04-19 | Can trust be made a system primitive in fieldnotes rather than only a principle? What would a trust system look like that doesn't devolve into metric gaming? Surfaced during the autonomous fix debate — deferred to post-Alpha. | [2026-04-19](2026-04-19-design-and-discovery.md) |
 | 2026-04-19 | Is the CLI tool sandbox memory idea (guide-created tools, reusable verified tools, persistent agent memory) worth pursuing after Alpha? Each of the three sub-ideas has a different risk profile. | [2026-04-19](2026-04-19-design-and-discovery.md) |
 | 2026-04-19 | Should there be a "meta-fieldguide" pattern — a top-level fieldguide whose steps reference other fieldguides — to orchestrate complex workflows? Dependency declaration is sufficient for Alpha, but the meta pattern may be useful as composition grows. | [2026-04-19](2026-04-19-design-and-discovery.md) |
+
+Moved to parking lot on 2026-04-20: homelab KB timing; trust as a system primitive.
 
 ---
 

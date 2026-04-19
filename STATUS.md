@@ -15,7 +15,7 @@ The README describes what Alpha will be — not what exists today. This file is 
 
 | Phase | Status | Notes |
 |---|---|---|
-| Requirements | ✅ Complete | 14 requirements — see [specs/requirements.md](specs/requirements.md) |
+| Requirements | ✅ Complete | 16 requirements — see [specs/requirements.md](specs/requirements.md) |
 | Design | 🔄 In progress | Schema, MCP server, agent specs |
 | Implementation | ⬜ Not started | |
 | Alpha release | ⬜ Not started | |
@@ -85,6 +85,8 @@ The README describes what Alpha will be — not what exists today. This file is 
 | 2026-04-18 | Agent hierarchy with human-approved growth | Lead proposes SMEs, human approves — controlled expansion |
 | 2026-04-18 | `modified_by` provenance history | Append-only list in frontmatter — queryable agent history without parsing changelogs |
 | 2026-04-18 | Fieldguide improvement backlog | Feedback → structured backlog → human triage in Alpha; agent-proposed edits post-Alpha |
+| 2026-04-18 | Python + uvx for MCP server | Best distribution story (uvx), Hypothesis for PBT, ruamel.yaml for round-trip YAML, already on target machines |
+| 2026-04-18 | Testing: PBT + BDD-style pytest | Hypothesis for round-trip properties, Given/When/Then pytest structure, end-to-end tool tests, no BDD framework overhead |
 
 ---
 

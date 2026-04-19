@@ -269,3 +269,65 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 4. WHEN the MCP_Server reads a file with malformed YAML frontmatter, THE Parser SHALL return a descriptive error identifying the file and the parse failure, and SHALL NOT return a partially-parsed object.
 5. THE Serializer SHALL preserve the order of frontmatter fields as defined in the Schema, so that articles written by the MCP_Server are human-readable and diff-friendly.
 6. THE Serializer SHALL preserve all existing article body content (sections below the frontmatter) when updating only frontmatter fields via `kb_update`.
+
+---
+
+### Requirement 15: Non-Functional Requirements
+
+**User Story:** As a developer and operator of the fieldnotes MCP server, I want the server to be performant, safe, portable, and observable, so that I can trust it with my knowledge base and run it on any machine I work from.
+
+#### Acceptance Criteria
+
+##### Performance
+
+1. THE MCP_Server SHALL handle a KB containing up to 500 articles without noticeable latency on `kb_search` and `kb_audit` operations.
+2. THE MCP_Server SHALL build an in-memory index of all articles at startup and SHALL NOT re-scan the filesystem on every tool call.
+
+##### Data Safety
+
+3. THE MCP_Server SHALL NOT modify any file in the KB_Repo during read operations (`kb_search`, `kb_get`, `kb_audit`, `fieldguide_load`, `fieldguide_get_context`). Read operations SHALL be side-effect free.
+4. THE MCP_Server SHALL write files atomically — a crash or interruption during a write operation SHALL NOT leave a partially-written or corrupted article in the KB_Repo.
+
+##### Portability
+
+5. THE MCP_Server SHALL run on macOS and Linux without platform-specific dependencies or conditional code paths.
+6. THE MCP_Server SHALL require only Python 3.11+ and declared pip dependencies. No system-level packages beyond the Python interpreter SHALL be required.
+
+##### Observability
+
+7. THE MCP_Server SHALL log every write operation (`kb_create`, `kb_update`, `fieldguide_advance`, `fieldguide_submit_feedback`, `fieldguide_review_feedback`) with the tool name, article or fieldguide ID, and timestamp, to stderr or a configurable log output.
+
+##### Schema Evolution
+
+8. THE Schema SHALL maintain backward compatibility across all minor versions — an article valid under schema v1.0 SHALL remain valid under all v1.x releases.
+
+---
+
+### Requirement 16: Testing Strategy
+
+**User Story:** As a developer working on the fieldnotes MCP server, I want a clear, practical testing strategy that verifies correctness without unnecessary ceremony, so that I can trust the server behaves correctly and catch regressions early.
+
+#### Acceptance Criteria
+
+##### Property-Based Testing
+
+1. THE parser and serializer SHALL be tested using property-based testing (Hypothesis) to verify the round-trip property: for all valid article objects, parsing then serializing then parsing SHALL produce an equivalent object (as specified in Requirement 14, criterion 3).
+2. THE property-based tests SHALL generate random valid articles covering all four article types (`knowledge`, `fieldguide`, `report`, `session`) and all volatility levels, to exercise edge cases that example-based tests would miss.
+
+##### Behavior-Driven Test Structure
+
+3. THE MCP tool tests SHALL follow a Given/When/Then structure in test naming and organization, using pytest. No BDD framework (e.g., behave) SHALL be required — the BDD discipline is in the test design, not the tooling.
+4. EACH MCP tool SHALL have at least one test for its success path and at least one test for each documented error condition in the requirements.
+
+##### Test Fixtures
+
+5. THE test suite SHALL include a test KB fixture — a minimal KB directory on disk containing valid articles of each type — used by all integration tests. THE fixture SHALL be valid against the Schema and reusable across test runs.
+6. THE test KB fixture SHALL be separate from the `examples/minimal-kb/` directory, so that example content and test content can evolve independently.
+
+##### Integration Over Unit Testing
+
+7. THE MCP tools SHALL be tested end-to-end through the tool interface, exercising the full path from tool call to file system operation and back. Internal functions SHALL NOT require separate unit tests unless they contain complex logic that is difficult to exercise through the tool interface alone.
+
+##### Schema Validation Testing
+
+8. THE schema validation logic SHALL be tested with both valid and invalid articles. Invalid article tests SHALL verify that the MCP_Server returns descriptive errors identifying which required fields are missing or invalid, as specified in Requirement 4, criterion 4.

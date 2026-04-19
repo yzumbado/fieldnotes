@@ -1,13 +1,15 @@
 # fieldnotes — Implementation Status
 
-> Last updated: 2026-04-18 | Agent: Kiro
+> Last updated: 2026-04-19 | Agent: Kiro
 
 ## Current phase: Design
 
 Requirements are complete. Design is in progress.
-**Nothing is implemented yet.** The MCP server does not exist. The schema files do not exist. The agent steering files do not exist.
+**Nothing is implemented yet.** The MCP server does not exist. Most agent steering files do not yet exist — only the project's foundational documents (PHILOSOPHY, TENETS, first-principles) and the project-wide collaboration guide.
 
-The README describes what Alpha will be — not what exists today. This file is the honest answer to "can I use this today?" (Not yet.)
+Schema progress: 3 of 5 schema documents complete (article-format, tag-taxonomy, fieldguide-format). Audit rules and agent protocol pending.
+
+The README describes what Alpha will be — not what exists today. This file is the honest answer to "can I use this today?" (Not yet — but we're closer than we were yesterday.)
 
 ---
 
@@ -16,7 +18,7 @@ The README describes what Alpha will be — not what exists today. This file is 
 | Phase | Status | Notes |
 |---|---|---|
 | Requirements | ✅ Complete | 16 requirements — see [specs/requirements.md](specs/requirements.md) |
-| Design | 🔄 In progress | Schema, MCP server, agent specs |
+| Design | 🔄 In progress | 3 of 5 schema docs complete; MCP server architecture and agent specs pending |
 | Implementation | ⬜ Not started | |
 | Alpha release | ⬜ Not started | |
 

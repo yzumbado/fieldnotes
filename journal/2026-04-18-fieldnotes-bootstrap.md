@@ -51,13 +51,19 @@ By the end of the session, fieldnotes existed — not as code, but as something 
 
 The repo at `github.com/yzumbado/fieldnotes` contains everything a new agent needs to pick up where we left off: the README, the requirements, the status tracker, the collaboration guide, the session state. Clone it, open it, say the phrase — and the work continues.
 
-### What We Learned
+### Try This Next Time
 
-**For the builder:** The best sessions start with a question, not a task. The maintenance list was the excuse to show up. The question about the researcher agent was the real work. Follow the questions.
+**If you're the human working with an AI:**
 
-**For the agent:** The planning discipline — present structure as bullet points before writing anything substantial — is not overhead. It's the mechanism that keeps the collaboration aligned. Every time we skipped it, we had to backtrack. Every time we used it, the output was better.
+When you feel like a session is drifting toward something bigger than the original task — name it out loud. Say: *"I think we're actually talking about X, not Y. Should we go there?"* Don't wait for the agent to notice. You saw it first in this session. That redirect is one of the most valuable things a human brings to the collaboration.
 
-**The pattern worth carrying forward:** When something feels like it's getting bigger than expected, don't resist it. Name it, frame it, and decide together whether to follow it. The best thing that happened today was recognizing that the maintenance task was pointing at something larger — and choosing to go there.
+Also: before asking for a document or a design, try saying *"show me the structure first, don't write it yet."* It takes 30 seconds and saves you from reading 500 words that went in the wrong direction.
+
+**If you're the AI working with a human:**
+
+When the human adds a file or folder to the workspace mid-session — stop and read it before continuing. Don't treat it as background context. It's almost always the real problem showing up. In this session, the `homeLabNetwork` folder was the proof that everything we'd been discussing was real. Reading it changed the direction of the whole conversation.
+
+And when you're about to generate something large — a README, a design doc, a spec — present the structure as bullet points first. Not as a formality. As a genuine check: *"Is this what you had in mind?"* The answer is often "almost, but not quite" — and that's much easier to fix at the outline stage than after the full document exists.
 
 ### What's Still Open
 

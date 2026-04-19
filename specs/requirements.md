@@ -2,13 +2,17 @@
 
 ## Introduction
 
-fieldnotes is a framework for building curated, agent-maintained knowledge bases and human-AI execution guides. It defines a schema, an agent protocol, and an MCP server that any compatible LLM can use to read, write, and execute against a structured knowledge base.
+fieldnotes is a framework for making human-AI work reproducible, transferable, and auditable. It defines a schema, an agent protocol, and an MCP server that any compatible LLM can use to read, write, and execute against a structured knowledge base.
 
-The framework was born from a concrete problem: two projects sharing the same physical hardware (a Beelink GTI15) accumulated decisions in isolation. The Rocket Pool project knew the machine as a staking node; the home lab network project knew it as a network device. Neither project could see what the other had decided. When a cross-cutting change was needed, there was no mechanism to carry knowledge across the boundary.
+Humans and AI working together are not limited by capability — they are limited by coordination. Most AI collaboration today is ephemeral: it lives in one conversation, on one machine, with one pair of participants. When the session ends, the context that made the work valuable disappears. The next session starts cold. The next person starts from scratch. Work that could compound across time, machines, and collaborators instead evaporates.
 
-fieldnotes solves this by giving knowledge a home — a structured, agent-navigable repository that travels between projects, sessions, and AI tools.
+The concrete problem that surfaced this gap: two projects sharing the same physical hardware (a Beelink GTI15) accumulated decisions in isolation. The Rocket Pool project knew the machine as a staking node; the home lab network project knew it as a network device. Neither project could see what the other had decided. When a cross-cutting change was needed, there was no mechanism to carry knowledge across the boundary.
 
-**Alpha scope:** Schema files, MCP server (KB + fieldguide operations), lead researcher spec + Kiro steering file, SME researcher template + Kiro steering file, session document type, minimal example KB, and the fieldguide execution protocol.
+fieldnotes solves the general problem through a specific mechanism: giving knowledge a home — a structured, agent-navigable repository — and giving procedures an executable protocol — fieldguides that any MCP-compatible LLM can run. The homelab was the first instance; the framework generalizes to any repeatable, partially-automatable work where human judgment is the bridge and AI can absorb the grind.
+
+**Alpha scope:** Schema files, MCP server (KB + fieldguide operations), lead researcher spec + Kiro steering file, SME researcher template + Kiro steering file, session document type, minimal example KB, and the fieldguide execution protocol — including `modified_by` provenance, fieldguide composition via `depends_on_fieldguides`, the Quick Summary block, optional `tip`/`warning`/`detailed_explanation` step fields, the Agent Autonomy Rule and Handoff Protocol, and the improvement backlog generated from execution feedback.
+
+For the project's belief system, see [PHILOSOPHY.md](../PHILOSOPHY.md). For operational principles, see [TENETS.md](../TENETS.md).
 
 ---
 
@@ -144,6 +148,12 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 8. WHEN a step's `type` is `verification`, THE executing agent SHALL run the completion command, compare output to `expected`, and report PASS or FAIL without advancing on FAIL.
 9. THE Schema SHALL require fieldguides to declare a `kb_references` list of article IDs that provide context for executing the guide.
 10. THE Schema SHALL require fieldguides to declare an `execution_model` block specifying whether the guide contains `human_steps`, `agent_steps`, and whether it `requires_approval`.
+11. THE Schema SHALL require every fieldguide to include a Quick Summary block at the top of the guide body containing: `Outcome`, `Starting state`, `Ending state`, `Estimated time`, `Difficulty` (one of `beginner`, `intermediate`, `advanced`), and `Reversible` (one of `yes`, `no`, `partially`). This enables a reader to decide in seconds whether the guide matches their need.
+12. THE Schema SHALL allow every fieldguide step to declare optional `tip`, `warning`, and `detailed_explanation` fields. WHEN present, the executing agent SHALL present `warning` prominently before executing the step, present `tip` inline with instructions, and SHALL NOT present `detailed_explanation` unless the human requests it or an error occurs.
+13. THE Schema SHALL allow fieldguides to declare an optional `depends_on_fieldguides` list of other fieldguide IDs that must be complete before this guide can start.
+14. WHEN `fieldguide_load` is called and the guide's `depends_on_fieldguides` list contains any fieldguide whose most recent session is not `complete`, THE MCP_Server SHALL return an error listing the unsatisfied dependencies and SHALL NOT create a new session for the requested guide.
+15. THE executing agent SHALL follow the Agent Autonomy Rule: if a step is `agent_executable`, the agent performs the action itself; the agent SHALL NOT ask the human to perform actions the agent can perform. The agent SHALL involve the human only when the step type requires it (`human_required`, `approval_gate`), when a verification fails, or when an unexpected error occurs.
+16. THE executing agent SHALL follow the Handoff Protocol when transitioning between step types, pausing for human input only at `human_required` and `approval_gate` boundaries, and halting progression on verification failures.
 
 ---
 
@@ -331,3 +341,66 @@ fieldnotes solves this by giving knowledge a home — a structured, agent-naviga
 ##### Schema Validation Testing
 
 8. THE schema validation logic SHALL be tested with both valid and invalid articles. Invalid article tests SHALL verify that the MCP_Server returns descriptive errors identifying which required fields are missing or invalid, as specified in Requirement 4, criterion 4.
+
+
+---
+
+### Requirement 17: Completion Verification
+
+**User Story:** As a fieldguide author, I want verification steps to handle real-world command output, flaky timing, and ambiguous failures, so that the executing agent produces reliable PASS/FAIL/ERROR signals and attaches useful diagnostics without asking me to parse raw output.
+
+#### Acceptance Criteria
+
+##### Match Modes
+
+1. THE completion block SHALL accept an `expected` field that is either a string (treated as exact match, preserving backward compatibility) or a structured object with `mode` and `value` fields.
+2. THE Schema SHALL support the following match modes: `exact` (full string equality), `contains` (output contains the value as a substring), and `regex` (output matches the regex).
+3. WHEN the `expected` field is a plain string, THE MCP_Server SHALL treat it as `mode: exact` for backward compatibility with fieldguides written before this requirement was added.
+
+##### Retry Semantics
+
+4. THE completion block SHALL accept an optional `retry` block containing `max_attempts` (integer, default 1) and `delay_seconds` (integer, default 0).
+5. WHEN a `retry` block is declared, THE executing agent SHALL run the completion command up to `max_attempts` times with `delay_seconds` between attempts, reporting `fail` only if all attempts produce non-matching output.
+
+##### Three-State Result Model
+
+6. THE step result SHALL be one of three states: `pass` (verification matched), `fail` (command ran cleanly but output did not match), or `error` (the verification command itself failed with a non-zero exit code or could not be executed).
+7. WHEN a verification returns `fail`, THE executing agent SHALL stop, report the failure output to the human, and SHALL NOT proceed to the next step. If an `on_failure.likely_causes` list is declared for the step, the agent SHALL present those causes alongside the failure.
+8. WHEN a verification returns `error`, THE executing agent SHALL stop and report the command, exit code, and stderr. The agent SHALL NOT interpret an `error` as a `fail` and SHALL NOT re-run the verification automatically.
+
+##### Diagnostic Execution
+
+9. THE completion block SHALL accept an optional `on_failure` block containing `likely_causes` (list of strings) and `diagnostic_commands` (list of shell commands).
+10. WHEN a step declares `on_failure.diagnostic_commands` and the verification returns `fail`, THE executing agent SHALL run each diagnostic command automatically and include their output in the failure report. Diagnostic commands are read-only by contract — THE Schema SHALL treat them as observation, not remediation.
+
+##### Idempotence
+
+11. THE step schema SHALL accept an optional `idempotent` boolean field (default `false`) declaring whether re-executing the step is safe.
+12. WHEN a step has `idempotent: true` and the agent encounters a session-state conflict (step marked complete but verification now fails), THE executing agent MAY re-run the step after reporting the discrepancy and receiving explicit human approval.
+13. WHEN a step has `idempotent: false` (or the field is absent) and any condition suggests re-running the step, THE executing agent SHALL NOT re-run it without explicit human approval.
+
+---
+
+### Requirement 18: Remediation Steps
+
+**User Story:** As a fieldguide author, I want to declare how common verification failures should be remediated, so that the executing agent can handle expected failures according to my explicit authorization rather than either stopping immediately or improvising a fix.
+
+#### Acceptance Criteria
+
+##### Remediation Step Type
+
+1. THE Schema SHALL define a new optional step type `remediation` that declares a fix for a preceding step's verification failure.
+2. A `remediation` step SHALL declare a `remediates` field referencing the step ID it is the fix for. The `remediates` step must appear earlier in the fieldguide than the `remediation` step.
+3. A `remediation` step SHALL declare its own `type` specifying the authority level: one of `agent_executable` (agent may execute the remediation autonomously), `approval_gate` (agent must present the remediation plan and wait for human approval), or `human_required` (only a human may perform the remediation).
+4. A `remediation` step SHALL declare a `completion` block following the same rules as any other step, so the agent can verify the remediation succeeded.
+
+##### Execution Rules
+
+5. WHEN a step's verification returns `fail` AND a `remediation` step exists with `remediates` referencing the failed step, THE executing agent SHALL present the remediation to the human. The agent SHALL NOT execute the remediation automatically, even when its `type` is `agent_executable`, without first presenting its existence and intent to the human.
+6. WHEN the human approves executing a remediation, THE executing agent SHALL execute it according to its declared `type` authority, verify completion, and THEN re-run the original step's verification to confirm the failure is resolved.
+7. IF the original step's verification still fails after a remediation is completed, THE executing agent SHALL report the continued failure and SHALL NOT attempt additional remediations or improvisations.
+8. THE Alpha implementation SHALL NOT support autonomous remediation without guide-author-declared `remediation` steps. Autonomous fixes to unexpected failures are explicitly out of scope for Alpha — see the Kiro Distinction in [TENETS.md](../TENETS.md).
+
+##### Feedback Integration
+
+9. WHEN a remediation is executed (successfully or not), THE MCP_Server SHALL record the remediation in the session document and SHALL attach structured feedback to the backlog file capturing: the failed step ID, the remediation step ID, the result of the remediation, and any human input or override. This feedback informs whether the guide itself should be updated — a frequently-used remediation may be a sign that the original step should be rewritten.

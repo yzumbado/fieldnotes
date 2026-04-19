@@ -84,6 +84,7 @@ These fields are required when `type: fieldguide`. Full fieldguide structure is 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `kb_references` | list of strings | Yes | Article IDs that provide context for executing this guide. |
+| `depends_on_fieldguides` | list of strings | No | Fieldguide IDs that must be complete before this guide can start. |
 | `execution_model` | block | Yes | Declares execution characteristics. See below. |
 
 `execution_model` block:
@@ -165,6 +166,7 @@ fieldguide_id:          # session only
 status:                 # session only (session status, distinct from tags.status)
 started:                # session only
 kb_references:          # fieldguide only
+depends_on_fieldguides: # fieldguide only, optional
 execution_model:        # fieldguide only
   human_steps:
   agent_steps:

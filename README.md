@@ -1,6 +1,6 @@
 # fieldnotes
 
-**A framework for building curated, agent-maintained knowledge bases and human-AI guides.**
+**A framework for making human-AI work reproducible, transferable, and auditable.** Built on a structured knowledge schema and a protocol any LLM can execute.
 
 ![Alpha](https://img.shields.io/badge/status-alpha-orange) ![License](https://img.shields.io/badge/license-MIT-blue)
 
@@ -8,16 +8,27 @@
 
 > **Development note:** This README is a working-backwards document — written as if Alpha is complete, to define what we're building before we build it. It is the north star, not the current state. For real implementation status, see [STATUS.md](STATUS.md).
 
+---
+
+## Start here
+
+Three entry points depending on what you're looking for:
+
+- **[README.md](README.md)** (this file) — what fieldnotes is and how to use it
+- **[PHILOSOPHY.md](PHILOSOPHY.md)** — why fieldnotes exists, what it believes about human-AI collaboration
+- **[TENETS.md](TENETS.md)** — the operational principles that govern decisions in this project
+
+For the founder's statement in first person, see [journal/first-principles.md](journal/first-principles.md).
 
 ---
 
 ## What is fieldnotes?
 
-fieldnotes is a framework for organizing knowledge and building guides that humans and AI agents work through together.
+fieldnotes is a system for human-AI work that compounds — work another person, another session, another AI tool can pick up, reproduce, verify, and improve.
 
-It is not a database. It is not a scraper. It does not generate knowledge from nothing.
+It is a structured knowledge schema with provenance. A fieldguide format that turns procedures into executable protocols any MCP-compatible LLM can run. An MCP server that exposes both as tools. Agent steering files that encode how a researcher thinks.
 
-It is a system for knowledge that was actually earned — through research, through building things, through making mistakes and figuring out why. Every fact has a source. Every article has an author. Every guide has a protocol that any AI can follow. And all of it is organized so any compatible agent, on any machine, can pick up where the last one left off.
+It is not a database. It is not a scraper. It does not generate knowledge from nothing. It is a system for knowledge that was actually earned — through research, through building things, through making mistakes and figuring out why. Every fact has a source. Every article has an author. Every guide has a protocol that any AI can follow. And all of it is organized so any compatible agent, on any machine, can pick up where the last one left off.
 
 You bring the knowledge. fieldnotes gives it a home — and a way to use it.
 
@@ -42,6 +53,8 @@ Then I realized the problem was deeper than organization. I wasn't just losing k
 fieldnotes is what I actually needed. A single place where knowledge lives, organized so agents can find it, maintained so it stays true, and structured so it travels — between projects, between sessions, between collaborators, between AI tools.
 
 Built because the problem was real, not because it seemed like a good idea in the abstract.
+
+This specific problem is one instance of a general pattern. Humans and AI working together are not limited by capability — they're limited by coordination. The context that makes AI-assisted work valuable doesn't live where the next human-AI pair can use it. Every new session starts cold. Every new project starts from scratch. fieldnotes started as a homelab tool. The shape of the solution turned out to be general: making human-AI work reproducible, transferable, and auditable. The homelab is where I'm testing it; the framework is for anyone with the same problem.
 
 ---
 
@@ -69,7 +82,11 @@ The human sets direction and makes final decisions. The agent brings technical d
 
 The commit history tells this story. Every commit message explains what changed, why, and what it enables — including which AI agent produced it.
 
-For the agent collaboration guide, see [`.kiro/steering/fieldnotes-dev.md`](.kiro/steering/fieldnotes-dev.md).
+**Key documents:**
+- [`PHILOSOPHY.md`](PHILOSOPHY.md) — what fieldnotes believes about human-AI collaboration and why it looks the way it does
+- [`TENETS.md`](TENETS.md) — the operational principles that govern decisions
+- [`journal/`](journal/) — session-by-session record of how the project has evolved, including named collaboration patterns (The Redirect, The Bullet Check, The Perspective Check) that shape how we work
+- [`.kiro/steering/fieldnotes-dev.md`](.kiro/steering/fieldnotes-dev.md) — the agent collaboration guide
 
 **Continuing development in a new session:**
 
@@ -124,15 +141,13 @@ SME researchers own their domain. They sign every article they create or modify.
 
 ### What fieldnotes stores
 
-Three document types, each with a different lifecycle:
+Four document types, each with a different lifecycle:
 
 **Knowledge articles** — facts, decisions, rationale. Living documents, updated as the world changes. Every fact has a source and an access date. Every article has a staleness model.
 
-**Fieldguides** — human-AI execution guides. Structured for both humans to read and agents to execute. Contains embedded execution protocol so any LLM can load and run it via MCP without custom training.
+**Fieldguides** — human-AI execution guides. Structured for both humans to read and agents to execute. Contains embedded execution protocol so any LLM can load and run it via MCP without custom training. Meant to be shared, composed, and improved through use.
 
 **Reports** — point-in-time analyses. Security audits, research summaries, one-time findings. Never updated — superseded by new reports. Historical record.
-
-And one companion type:
 
 **Sessions** — execution state for a fieldguide in progress. Tracks current phase, completed steps, decisions made, open issues. Lives alongside the fieldguide. When you open fieldnotes on a new machine, the agent reads the session and knows exactly where you are.
 
@@ -179,7 +194,7 @@ sources:
 ## Changelog
 ```
 
-→ [Full schema documentation](_schema/article-format.md)
+→ [Full schema documentation](schema/article-format.md)
 
 ### What a fieldguide looks like
 
@@ -213,7 +228,7 @@ execution_model:
 ## Changelog
 ```
 
-→ [Full fieldguide schema](_schema/fieldguide-format.md)
+→ [Full fieldguide schema](schema/fieldguide-format.md)
 
 ---
 
@@ -313,7 +328,7 @@ The fieldnotes MCP server exposes these tools to any connected client:
 **Agent operations**
 - `agent_propose(spec)` — propose a new SME agent (lead researcher only)
 
-→ [Full protocol spec](_schema/agent-protocol.md)
+→ [Full protocol spec](schema/agent-protocol.md)
 
 ---
 
@@ -323,15 +338,21 @@ The fieldnotes MCP server exposes these tools to any connected client:
 
 **Kiro** — available in Alpha. Steering files for lead researcher + SME template. Full explore and doer mode behavior. → [implementations/kiro/](implementations/kiro/)
 
-**Other clients** — the protocol is open. Build your own implementation against [_schema/agent-protocol.md](_schema/agent-protocol.md). Contributions welcome.
+**Other clients** — the protocol is open. Build your own implementation against [schema/agent-protocol.md](schema/agent-protocol.md). Contributions welcome.
 
 ---
 
 ## Alpha — what works, what doesn't
 
 **What's in Alpha:**
-- Article schema and tag taxonomy (knowledge, fieldguide, report, session)
+- Article schema with `modified_by` provenance history (knowledge, fieldguide, report, session)
+- Tag taxonomy with tagging guidelines for agents
 - Fieldguide execution protocol — step types, completion conditions, feedback hooks
+- Fieldguide Quick Summary block (outcome, starting/ending state, time, difficulty, reversibility)
+- Optional step-level `tip`, `warning`, and `detailed_explanation` fields
+- Agent Autonomy Rule and explicit Handoff Protocol between step types
+- Fieldguide composition via `depends_on_fieldguides`
+- Improvement backlog generated from execution feedback
 - MCP server with all KB and fieldguide operations
 - Lead researcher spec + Kiro steering file
 - SME researcher template + Kiro steering file
@@ -339,6 +360,7 @@ The fieldnotes MCP server exposes these tools to any connected client:
 - Minimal example KB with one knowledge article and one fieldguide
 
 **What's not built yet:**
+- Autonomous remediation — authors can declare `remediation` steps, but Alpha's default response to failure is to report and wait
 - Automated audit runner — audit logic exists, no cron/hook to trigger it automatically
 - Multi-KB discovery — no way to search across multiple KB repos
 - Agent-to-agent handoff protocol — SMEs can't formally delegate to each other yet
@@ -352,13 +374,13 @@ The fieldnotes MCP server exposes these tools to any connected client:
 - The Kiro implementation is the only behavior layer available. Other clients get MCP tools but not explore/doer mode behavior until they build their own implementation.
 - Session documents are public if your KB is public. This is intentional but worth knowing.
 
-This is a working-in-progress. I'm building it because I need it. The first real KB using this framework is [fieldnotes-kb-homelab](https://github.com/[user]/fieldnotes-kb-homelab) — covering home lab infrastructure, Ethereum staking, and whatever comes next. That project is where Alpha gets validated against real use.
+This is a working-in-progress. I'm building it because I need it. The first real KB using this framework will be a homelab KB covering infrastructure, Ethereum staking, and whatever comes next — planned, not yet created. That project is where Alpha gets validated against real use.
 
 ---
 
 ## Contributing
 
-**Improve the framework** — better schema, better agent specs, new MCP tools, new implementations. Open a PR. Changes to `_schema/` need a clear rationale — the schema is the contract everything else depends on.
+**Improve the framework** — better schema, better agent specs, new MCP tools, new implementations. Open a PR. Changes to `schema/` need a clear rationale — the schema is the contract everything else depends on.
 
 **Publish your own KB** — create a KB repo, follow the schema, make it public. That's a contribution to the ecosystem even if you never touch this repo.
 
@@ -376,4 +398,4 @@ MIT — use it, fork it, build on it.
 
 ---
 
-*fieldnotes grew out of a real problem encountered while building a complex technical project with an AI collaborator. The knowledge it was built to organize lives in [fieldnotes-kb-homelab](https://github.com/[user]/fieldnotes-kb-homelab) — a public KB that is itself a work in progress, maintained by the same agents that fieldnotes defines.*
+*fieldnotes grew out of a real problem encountered while building a complex technical project with an AI collaborator. The first public KB built on this framework — a homelab covering infrastructure, Ethereum staking, and more — is planned and will be released alongside Alpha as a reference implementation.*

@@ -10,7 +10,7 @@ Read this to understand not just what fieldnotes is, but how it came to be.
 
 **As a human:** Read the entries in order to understand the project's evolution. The open questions section is where unresolved ideas live — good starting points for new sessions.
 
-**As an agent:** At session start, read the open questions, the collaboration patterns, and the most recent entry. At session close, write a draft entry for this session, update the patterns if new ones emerged, and update the open questions. Commit everything as part of the session-closing commit.
+**As an agent:** At session start, read the open questions, the collaboration patterns, and the most recent entry. Also read the most recent letter in [`agent-notes/`](agent-notes/) — it's a first-person note from the previous agent instance with calibration about the collaboration. At session close, write a draft entry for this session, update the patterns if new ones emerged, update the open questions, and optionally write your own letter in `agent-notes/` if the session produced insights worth passing forward. Commit everything as part of the session-closing commit.
 
 The journal is append-only. Entries are never edited after the session closes — they're a record of what we knew and thought at the time.
 
@@ -40,6 +40,26 @@ What it means: the builder wants to shape direction before content exists. Alway
 
 What it means: when the builder adds a file or folder mid-session, stop and read it. It's almost always the real problem showing up. Don't treat it as background context.
 
+**The Perspective Check** — the builder invites the agent to form and share its own critical view of the project before giving it a task.
+> *"Tell me what's your idea of the project, what you think of our progress, and the problem we're trying to solve. What do you like? What would you do differently?"* (2026-04-19)
+
+What it means: the agent is being asked for genuine input, not a comprehension test. It works because the documentation is strong enough for a fresh read to produce a real opinion. The agent's honest critique — what they'd change and why — often surfaces questions the original session didn't ask. Proposed changes flow from this pattern into requirements and design. Best used at session start when the agent has just loaded context.
+
+**The Inspiration Spill** — the builder writes a long, energized, partially-unorganized stream of ideas.
+> A multi-paragraph message about philosophy, vision, and how the project should be framed — arriving all at once. (2026-04-19)
+
+What it means: the agent's job is to receive, reflect, and *name what's genuinely new* before proposing structure. Catching too early loses the texture; organizing prematurely strips the voice. Echo the ideas back. Let the builder confirm. *Then* propose structure.
+
+**The Critical Pushback Request** — the builder explicitly asks the agent to critique their own idea.
+> *"Critic my idea. Why not now? Why should we not do this?"* (2026-04-19)
+
+What it means: agreement isn't the goal; better decisions are. When the builder asks for pushback, give real concerns with reasoning — not softened qualifiers. The autonomous fix debate produced a better design (the `remediation` step type) because both sides held their ground until the right answer surfaced.
+
+**The Voice Match Request** — the builder asks the agent to write in the builder's voice based on conversation history.
+> *"You already get my style from all our interactions."* (2026-04-19)
+
+What it means: after enough collaboration, the agent has an implicit model of how the builder expresses things. When trusted to write in that voice, the agent should lean on that implicit context — not fall back to a generic tone. Works because of context depth, not style guides.
+
 ---
 
 ## Open Questions
@@ -49,21 +69,26 @@ Questions that surfaced during sessions and haven't been fully resolved yet.
 | Date | Question | From session |
 |---|---|---|
 | 2026-04-18 | What's the right name for the human collaborator in these entries? "The builder" is a placeholder — something that better captures the partnership nature. | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) |
-| 2026-04-18 | The `fieldnotes-kb-homelab` repo is referenced in the README but doesn't exist yet. Create before or after the design phase? | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) |
+| 2026-04-18 | The homelab KB repo is referenced in the README but doesn't exist yet. The README now says "planned, not yet created." When is the right time to create it? | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) |
+| 2026-04-19 | Can trust be made a system primitive in fieldnotes rather than only a principle? What would a trust system look like that doesn't devolve into metric gaming? Surfaced during the autonomous fix debate — deferred to post-Alpha. | [2026-04-19](2026-04-19-design-and-discovery.md) |
+| 2026-04-19 | Is the CLI tool sandbox memory idea (guide-created tools, reusable verified tools, persistent agent memory) worth pursuing after Alpha? Each of the three sub-ideas has a different risk profile. | [2026-04-19](2026-04-19-design-and-discovery.md) |
+| 2026-04-19 | Should there be a "meta-fieldguide" pattern — a top-level fieldguide whose steps reference other fieldguides — to orchestrate complex workflows? Dependency declaration is sufficient for Alpha, but the meta pattern may be useful as composition grows. | [2026-04-19](2026-04-19-design-and-discovery.md) |
 
 ---
 
 ## Pending Tasks for Next Session
 
-Items discovered during the founding session that need to be picked up.
+Items discovered during previous sessions that need to be picked up.
 
 | # | Task | Priority | Notes |
 |---|---|---|---|
 | P1 | Create `journal/session-notes.md` placeholder | Low | The scratch pad pattern is documented but the file doesn't exist yet. Add an empty placeholder with instructions. |
-| P2 | Add `journal/session-notes.md` to `.gitignore` OR decide it should be committed as a draft | Low | Needs a decision: is the scratch pad disposable (gitignore) or a committed draft (tracked)? |
-| P3 | Create `fieldnotes-kb-homelab` repo | Medium | Referenced in README, doesn't exist. First real KB — validates the framework against real content. |
+| P2 | Add `journal/session-notes.md` to `.gitignore` OR decide it should be committed as a draft | Low | **Decided 2026-04-19:** gitignored (scratch material, not committed). |
+| P3 | Create the homelab KB repo | Medium | First real KB — validates the framework against real content. README now says "planned, not yet created" honestly. |
 | P4 | Add `CHANGELOG.md` | Low | Commit history serves this purpose for now, but a human-readable changelog becomes useful as the project grows. Not urgent for Alpha. |
-| P5 | Begin design phase — present bullet structure before writing | High | Next item on the STATUS.md checklist. Schema files, MCP server architecture, agent specs. Use the planning rule. |
+| P5 | Continue design phase — `schema/audit-rules.md` and `schema/agent-protocol.md` | High | Next documents on the checklist. Follows the bullet-structure-first planning rule. |
+| P6 | Design phase — agent specs (lead-researcher, sme-researcher, _template) | Medium | After schema docs are complete. |
+| P7 | Design phase — MCP server architecture document | Medium | After agent specs, before implementation begins. |
 
 ---
 
@@ -72,3 +97,12 @@ Items discovered during the founding session that need to be picked up.
 | Date | Title | Key themes |
 |---|---|---|
 | [2026-04-18](2026-04-18-fieldnotes-bootstrap.md) | The Day fieldnotes Was Born | Origin story, working-backwards methodology, cross-project knowledge problem, collaboration patterns, Kiro's perspective on the session |
+| [2026-04-19](2026-04-19-design-and-discovery.md) | Design, and the Day the Project Named Itself | Perspective Check pattern, three schema documents, autonomous fix debate, philosophy discovery, PHILOSOPHY/TENETS/first-principles created, repo-wide alignment review |
+
+## Agent Notes
+
+First-person letters from one agent instance to the next — calibration notes, collaboration patterns, and what to expect from the builder. See [`agent-notes/`](agent-notes/).
+
+| Date | Author | Topic |
+|---|---|---|
+| [2026-04-19](agent-notes/2026-04-19-kiro-to-kiro.md) | Kiro | Full calibration letter: collaboration patterns, builder's working style, what I got wrong so you don't |

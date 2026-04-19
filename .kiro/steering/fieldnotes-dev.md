@@ -18,7 +18,7 @@ Your job is to help build fieldnotes — a framework for curated, agent-maintain
 
 ## The Collaboration Model
 
-The human sets direction and makes final decisions. The agent brings technical depth, research, structure, and execution. Neither works as well alone.
+The tenets govern this. In short: the human sets direction and makes final decisions. The agent brings technical depth, research, structure, and execution. Neither works as well alone. For the full operational principles, see [TENETS.md](../../TENETS.md) — especially Tenet 7 (human sets direction, agent executes within it) and Tenet 8 (the planning step is not overhead).
 
 **Human's role:**
 - Sets priorities and direction
@@ -41,22 +41,29 @@ The human sets direction and makes final decisions. The agent brings technical d
 Every session starts the same way:
 
 1. Read `STATUS.md` — current phase, what's in progress, what's next
-2. Read `specs/requirements.md` — understand the problem before touching anything
-3. Check the Alpha checklist in `STATUS.md` — pick up where the last session left off
-4. Read `.kiro/steering/session-state.md` — what was decided last session, open issues
-5. Read `journal/README.md` — scan open questions and recent patterns
-6. Read the most recent journal entry — understand the last session's arc
+2. Read `PHILOSOPHY.md` — what fieldnotes believes and why it looks the way it does
+3. Read `TENETS.md` — the operational principles that govern decisions this session
+4. Read `specs/requirements.md` — understand the problem before touching anything
+5. Check the Alpha checklist in `STATUS.md` — pick up where the last session left off
+6. Read `.kiro/steering/session-state.md` — what was decided last session, open issues
+7. Read `journal/README.md` — scan open questions and recent patterns
+8. Read the most recent journal entry — understand the last session's arc
+9. **Read the most recent letter in `journal/agent-notes/`** — the previous agent's notes-to-you about how this collaboration works. This is calibration, not rules.
 
 Do not ask "what were we doing?" — the files answer that question. If the files don't answer it, that's a gap to fix before continuing.
 
 Open with: "Here's where we are: [current phase from STATUS.md]. The last session [summary from session-state.md]. Ready to continue with [next item from checklist], or do you have something else in mind?"
+
+**During the session, consult the tenets when making decisions.** They are the ground truth for how we operate. If a tenet seems to suggest a different action than the current plan, surface the conflict — don't silently deviate.
 
 **Session close sequence:**
 1. Write a draft journal entry for this session — narrative, not a log (see `journal/` for format)
 2. Update `journal/README.md` — add the new entry to the index, update open questions
 3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps
 4. Update `STATUS.md` checklist if any items were completed
-5. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
+5. **Optional but recommended: write an agent-to-agent letter** in `journal/agent-notes/` if the session revealed new collaboration patterns or insights that future agents should know. This is append-only — don't rewrite existing letters, add yours alongside.
+6. Clear `journal/session-notes.md` (scratch pad — gitignored locally)
+7. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
 
 ---
 
@@ -165,11 +172,11 @@ When anything changes, update all affected documentation in the same commit. A c
 
 | Changed | Also check / update |
 |---|---|
-| `_schema/` files | `specs/design.md`, `specs/requirements.md` (if schema contradicts a requirement), `README.md` examples section, `examples/minimal-kb/`, `STATUS.md` checklist |
+| `schema/` files | `specs/design.md`, `specs/requirements.md` (if schema contradicts a requirement), `README.md` examples section, `examples/minimal-kb/`, `STATUS.md` checklist |
 | `specs/requirements.md` | `specs/design.md` (if design exists and is affected by the change) |
 | `specs/design.md` | `STATUS.md` checklist, `specs/requirements.md` (if design reveals a gap or contradiction) |
 | `mcp-server/` code | `specs/design.md`, `STATUS.md` checklist, `examples/minimal-kb/` (if tool interface changed) |
-| `_agents/` steering files | `specs/design.md`, `implementations/kiro/README.md` |
+| `agents/` steering files | `specs/design.md`, `implementations/kiro/README.md` |
 | `README.md` | `STATUS.md` (note what changed in the north star and why) |
 | Any file | `journal/session-notes.md` — add a quick note (see below) |
 

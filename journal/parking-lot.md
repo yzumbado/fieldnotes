@@ -43,7 +43,7 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ## Active items
 
-### 2026-04-20 — Alpha scope: Big Beta vs. Bootstrap play
+### 2026-04-19 — Alpha scope: Big Beta vs. Bootstrap play
 
 **Summary:** Two plausible shapes for Alpha. Option A (Big Beta): keep scope as currently checklisted and ship a comprehensive framework. Option B (Bootstrap): treat fieldnotes's own development as the first KB and produce a fieldguide for "how to build a collaborative AI project using fieldnotes" as part of Alpha, with lighter feature surface but stronger validation claim.
 
@@ -70,11 +70,11 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ---
 
-### 2026-04-20 — Homelab KB — when and where to create it
+### 2026-04-19 — Homelab KB — when and where to create it
 
 **Summary:** The homelab KB is referenced in the README as "planned, not yet created." It was originally framed as the validation ground for Alpha. Now reframed (session 3): if the framework is right, the homelab is an easy case — it's a consumer of the framework, not its proof. The remaining question is when to create it and in what relationship to the bootstrap KB.
 
-**Context at parking:** Previously in journal Open Questions. Moved here on 2026-04-20 because it's now a when/how decision, not an open research question. Session 3 reframe: reduce the homelab's influence on framework shape; treat it as a downstream KB that benefits from getting the framework right first.
+**Context at parking:** Previously in journal Open Questions. Moved here in session 3 (2026-04-19) because it's now a when/how decision, not an open research question. Session 3 reframe: reduce the homelab's influence on framework shape; treat it as a downstream KB that benefits from getting the framework right first.
 
 **What we know:**
 - The homelab problem (two AI-assisted projects with no way to share knowledge) was the proof that the coordination gap is real. That history stays.
@@ -92,11 +92,11 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ---
 
-### 2026-04-20 — Trust as a system primitive
+### 2026-04-19 — Trust as a system primitive
 
 **Summary:** The project rests on trust built through visibility. Visibility is currently implemented as "humans read things" — the audit log, the provenance list, the changelog, the session record. At some scale, that breaks. The question: can trust become a system primitive in fieldnotes — measurable, queryable, enforceable — rather than only a principle enforced by human attention?
 
-**Context at parking:** Previously in journal Open Questions. Moved here on 2026-04-20 because future work on this depends on Alpha being in users' hands; the trigger is concrete. Originally surfaced during the autonomous fix debate in session 2, where the conversation kept returning to the question of whether trust could be made structural rather than procedural.
+**Context at parking:** Previously in journal Open Questions. Moved here in session 3 (2026-04-19) because future work on this depends on Alpha being in users' hands; the trigger is concrete. Originally surfaced during the autonomous fix debate in session 2, where the conversation kept returning to the question of whether trust could be made structural rather than procedural.
 
 **What we know:**
 - The architecture currently bets on human attention as the trust enforcement mechanism. That has a ceiling.
@@ -116,7 +116,7 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ---
 
-### 2026-04-20 — Session-close routine as its own fieldguide
+### 2026-04-19 — Session-close routine as its own fieldguide
 
 **Summary:** The session-close routine currently lives in `.kiro/steering/fieldnotes-dev.md` as procedural steps. Structurally, that's a fieldguide — numbered steps, declared order, verification passes, completion conditions. The question: should it be promoted to an actual fieldguide once the MCP server and fieldguide infrastructure exist? If yes, is it the *first* fieldguide in the bootstrap KB?
 
@@ -139,7 +139,7 @@ Items stay in the file after resolution — with status updated and a pointer to
 
 ---
 
-### 2026-04-20 — Ritual complexity watch
+### 2026-04-19 — Ritual complexity watch
 
 **Summary:** The session-close routine started at six sub-steps, grew to seven, now has nine numbered steps plus sub-steps under step 2, plus a separate update list, plus two named passes (contract reconciliation, consistency). Each addition was justified by a specific failure; collectively, complexity is accumulating. At some point a ritual that takes too long starts getting shortcut. The question: at what point do we consolidate, simplify, or retire parts of the routine?
 

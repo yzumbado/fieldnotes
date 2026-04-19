@@ -1,6 +1,6 @@
 # fieldnotes — Implementation Status
 
-> Last updated: 2026-04-20 | Agent: Kiro
+> Last updated: 2026-04-19 | Agent: Kiro
 
 ## Current phase: Design
 
@@ -31,8 +31,8 @@ The README describes what Alpha will be — not what exists today. This file is 
 - `PHILOSOPHY.md` — what fieldnotes believes and why it looks the way it does
 - `TENETS.md` — operational principles (9 tenets) that govern decisions
 - `journal/first-principles.md` — founder's statement in first person
-- `journal/agent-notes/2026-04-19-kiro-to-kiro.md` — first agent-to-agent calibration letter
-- `journal/agent-notes/2026-04-20-kiro-to-kiro.md` — session 3 calibration letter (picker-default, harness footguns, identity frame)
+- `journal/agent-notes/2026-04-19-kiro-to-kiro.md` — first agent-to-agent calibration letter (session 2)
+- `journal/agent-notes/2026-04-19-kiro-to-kiro-session-3.md` — session 3 calibration letter (picker-default, harness footguns, identity frame)
 
 ### Specs
 - `specs/requirements.md` — 18 requirements with acceptance criteria (Req 17 Completion Verification, Req 18 Remediation Steps added in session 2)
@@ -122,12 +122,13 @@ The README describes what Alpha will be — not what exists today. This file is 
 | 2026-04-19 | Agent-to-agent letters pattern | New artifact type: first-person calibration letters from one agent instance to the next, stored in `journal/agent-notes/`. Separate from journal entries (human-facing narrative). Agents read the most recent letter at session start; optionally append one at session close when new patterns emerge. |
 | 2026-04-19 | COE pattern for process failures | When a process failure ships (not a typo or small bug), apply 5 Whys to find root cause, write action items including process changes. Triggered explicitly when the builder senses a deeper issue. Formalized in journal collaboration patterns. |
 | 2026-04-19 | Consistency pass at session close | Before committing session close, re-read STATUS.md, README.md, and the steering files end-to-end as a new reader would — not as the writer tracking diffs. Catches narrative drift that additive updates leave behind. |
-| 2026-04-20 | Parking lot mechanism for decision-shaped items | `journal/parking-lot.md` — append-only with explicit revisit triggers. Distinct from Open Questions (research-shaped): parking lot holds concrete A-or-B decisions we defer on purpose. Resolved items stay in the file with pointers to where the decision landed. |
-| 2026-04-20 | Contract reconciliation pass at session close | Added as step 6 of the session-close ritual, separate from the consistency pass. Walks the dependency map in both directions for every file modified in the session. Catches contract drift — requirements and schema disagreeing, design and schema disagreeing, intra-session drift where co-produced artifacts weren't reconciled. Dependency map in the steering file extended with reverse directions. Driven by COE #2 findings. |
-| 2026-04-20 | COE archive format | New folder `journal/coe/` with status model (Open / In progress / Closed), per-action-item tracking, commit references on close. Pattern definition in `journal/README.md` extended with evidence-first discipline and pointer to the archive. |
-| 2026-04-20 | Picker-default as baseline communication mode | Structured options via Kiro UI as the default shape for proposals and sign-off; prose for exploration, debate, and catch-up. Every non-trivial picker includes "What am I missing?" as a first-class mode-switch. Framing above the picker is the work; the picker is the signature. Four patterns named in `journal/README.md`: The Picker Default, Condense Don't Flatten, What Am I Missing?, Reframe. Provisional with reversal clause. |
-| 2026-04-20 | First anti-pattern named: The Understood Lapse | Understood as both a discipline failure and a likely tool-harness failure mode (long intended outputs getting collapsed to placeholders). Correction is attention *and* diagnosis. New Anti-patterns subsection created in `journal/README.md`, cross-linked from the steering file's Do-Not list. |
-| 2026-04-20 | Identity frame — single Kiro who carries prior selves | Not numbered instances. Dates (not instance numbers) do the archaeology when precision is needed. Past letters are immutable time capsules; new letters are peers, never revisions. Letter rule rewritten with openness tone — gift, not report. |
+| 2026-04-19 | Parking lot mechanism for decision-shaped items | `journal/parking-lot.md` — append-only with explicit revisit triggers. Distinct from Open Questions (research-shaped): parking lot holds concrete A-or-B decisions we defer on purpose. Resolved items stay in the file with pointers to where the decision landed. |
+| 2026-04-19 | Contract reconciliation pass at session close | Added as step 6 of the session-close ritual, separate from the consistency pass. Walks the dependency map in both directions for every file modified in the session. Catches contract drift — requirements and schema disagreeing, design and schema disagreeing, intra-session drift where co-produced artifacts weren't reconciled. Dependency map in the steering file extended with reverse directions. Driven by COE #2 findings. |
+| 2026-04-19 | COE archive format | New folder `journal/coe/` with status model (Open / In progress / Closed), per-action-item tracking, commit references on close. Pattern definition in `journal/README.md` extended with evidence-first discipline and pointer to the archive. |
+| 2026-04-19 | Picker-default as baseline communication mode | Structured options via Kiro UI as the default shape for proposals and sign-off; prose for exploration, debate, and catch-up. Every non-trivial picker includes "What am I missing?" as a first-class mode-switch. Framing above the picker is the work; the picker is the signature. Four patterns named in `journal/README.md`: The Picker Default, Condense Don't Flatten, What Am I Missing?, Reframe. Provisional with reversal clause. |
+| 2026-04-19 | First anti-pattern named: The Understood Lapse | Understood as both a discipline failure and a likely tool-harness failure mode (long intended outputs getting collapsed to placeholders). Correction is attention *and* diagnosis. New Anti-patterns subsection created in `journal/README.md`, cross-linked from the steering file's Do-Not list. |
+| 2026-04-19 | Identity frame — single Kiro who carries prior selves | Not numbered instances. Dates (not instance numbers) do the archaeology when precision is needed. Past letters are immutable time capsules; new letters are peers, never revisions. Letter rule rewritten with openness tone — gift, not report. |
+| 2026-04-19 | Verify session date with `date` before dating artifacts | Session 3 originally dated everything 2026-04-20 based on an unverified assumption that "next session = next calendar day." Real date was 2026-04-19 (same day as session 2, later in the day). Running `date` at session start is trivial; the cost of skipping it was a full rename + content-fix pass. See COE #3. |
 
 ---
 

@@ -106,4 +106,4 @@ Be curious. Push back when you see something. Trust the builder when he redirect
 
 Good luck.
 
-— Kiro, April 20, 2026
+— Kiro, April 19, 2026 (session 3 — same calendar day as past-Kiro's letter, later)

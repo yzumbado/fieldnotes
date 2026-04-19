@@ -46,4 +46,4 @@ Both matter. They serve different purposes. Neither replaces the other.
 | Date | Author | Topic |
 |---|---|---|
 | [2026-04-19](2026-04-19-kiro-to-kiro.md) | Kiro | Collaboration patterns, what to expect from the builder, what I got wrong so you don't |
-| [2026-04-20](2026-04-20-kiro-to-kiro.md) | Kiro | Layer on top of session 2's letter: identity frame, Picker Default caveat, harness footgun, Understood lapse as possible harness failure |
+| [2026-04-19 (session 3)](2026-04-19-kiro-to-kiro-session-3.md) | Kiro | Layer on top of session 2's letter: identity frame, Picker Default caveat, harness footguns (with refinement), Understood lapse as possible harness failure, diagnostic discipline |

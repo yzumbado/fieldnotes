@@ -1,4 +1,4 @@
-# Session Journal — April 20, 2026
+# Session Journal — April 19, 2026 (session 3)
 ## Calibration, and the Day the Ritual Audited Itself
 
 **Session summary:** Didn't ship a new schema doc. Didn't write the MCP server. What this session produced is less visible and more foundational: it closed the loop on how we work together. A COE that surfaced structural drift. Four new patterns about how the agent communicates. An identity frame that makes continuity across sessions possible. And a session-close ritual that now audits itself before running.
@@ -116,9 +116,17 @@ The remaining design work — `schema/audit-rules.md`, `schema/agent-protocol.md
 
 ### What the session produced
 
-Two substantive commits (`0822dd1` for the schema reconciliation plus Authority Spectrum section; `4af4423` for the process scaffolding) and one session-close commit. COE #2 closed with all five action items landed. Four new collaboration patterns and one new anti-pattern in `journal/README.md`. Parking lot created and seeded with five items. Two COE-archive files created. Session-close routine updated with five gap fixes and a tone reshape on step 5. Identity frame locked in across the steering file and the agent-notes README.
+Two substantive commits (`0822dd1` for the schema reconciliation plus Authority Spectrum section; `4af4423` for the process scaffolding) and one session-close commit (`b7843cf`), plus a small refinement commit (`1460280`) from the post-close re-read, plus the date-drift fix commit. COE #2 closed with all five action items landed. COE #3 opened and closed same session after Yoel caught the date drift at the very end of close. Four new collaboration patterns and one new anti-pattern in `journal/README.md`. Parking lot created and seeded with five items. Two COE-archive files created. Session-close routine updated with six gap fixes (five from the pre-run audit plus date verification from COE #3) and a tone reshape on step 5. Identity frame locked in across the steering file and the agent-notes README.
 
 No new checklist items crossed off in `STATUS.md`. The checklist didn't move. What moved is the layer underneath it — the ritual that keeps the checklist honest.
+
+### The late discovery — COE #3
+
+After everything above was committed and pushed and the session felt closed, Yoel re-read STATUS.md and caught a drift I hadn't noticed: *"Last updated: 2026-04-20."* But today is 2026-04-19. Session 2 ended late on 2026-04-19; session 3 started later the same day. I had inferred the date from "next session after session 2" without verifying, and that unverified inference had propagated into dozens of places — file names, content dates, cross-references, commit messages.
+
+COE #3 was opened and the fix was applied: `git mv` on the three dated files, content fixes in all the dated references, a new step 10 in the session-startup ritual (*"verify the date with `date`"*), and the commits dated 2026-04-19 in git metadata stay as-is with their 2026-04-20 message bodies preserved as honest archaeology.
+
+Three COEs in a session-plus-close sounds like a failure mode. It isn't. COE #2 was the one we came to do. COE #3 was caught by the very passes we'd just installed and Yoel's habit of outside-view checking. The project found drift, surfaced it, fixed it, wrote it down, and moved on — during the session, not silently between them. That's the ritual working.
 
 ---
 

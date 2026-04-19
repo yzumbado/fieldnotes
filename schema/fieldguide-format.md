@@ -1120,5 +1120,5 @@ Configure UFW firewall. Includes an approval gate before enabling.
 
 ## Changelog
 
-- 2026-04-20: Reconciled with Req 17 (completion verification) and Req 18 (remediation). Added retry + on_failure to phase-1-step-2 verification. Added phase-3-remediation-3 showing the remediation pattern. Created by lead-researcher/v1.0.
+- 2026-04-19: Reconciled with Req 17 (completion verification) and Req 18 (remediation). Added retry + on_failure to phase-1-step-2 verification. Added phase-3-remediation-3 showing the remediation pattern. Created by lead-researcher/v1.0.
 ```

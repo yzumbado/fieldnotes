@@ -49,6 +49,7 @@ Every session starts the same way:
 7. Read `journal/README.md` — scan open questions and recent patterns
 8. Read the most recent journal entry — understand the last session's arc
 9. **Read the most recent letter in `journal/agent-notes/`** — the previous agent's notes-to-you about how this collaboration works. This is calibration, not rules.
+10. **Verify the date with `date`** before creating any dated artifact. Do not infer the session date from "it must be the next day after the last session" or from the last journal entry's date — sessions can happen later the same day. The cost of running `date` is trivial; the cost of dating a session wrong is a full rename + content-fix pass. (See COE #3.)
 
 Do not ask "what were we doing?" — the files answer that question. If the files don't answer it, that's a gap to fix before continuing.
 
@@ -187,7 +188,7 @@ Agent: Kiro
 **Commit call mechanics — three harness footguns to avoid:**
 
 - **Ordering:** run `git add`, `git commit`, and `git push` as **separate tool calls**, each in its own block. Waiting for each to return before submitting the next is slower but reliable. Batching them in one shell invocation can let a push race ahead of a slower commit and confuse what actually made it to origin. (Observed in session 2, 2026-04-19.)
-- **Argument shape and size:** for non-trivial commit messages, use **multiple `-m` flags with short body per flag** — `git commit -m "short title" -m "short body"` — rather than a single multiline `-m`. But note: *even multi-`-m` can drop if the total message is too long*. Keep commit bodies short and put detail in the journal entry, not in the commit message. The commit log stays thin; the narrative lives in `journal/`. (Observed in session 3, 2026-04-20 — first on a single multiline `-m`, then on a very long multi-`-m` body.)
+- **Argument shape and size:** for non-trivial commit messages, use **multiple `-m` flags with short body per flag** — `git commit -m "short title" -m "short body"` — rather than a single multiline `-m`. But note: *even multi-`-m` can drop if the total message is too long*. Keep commit bodies short and put detail in the journal entry, not in the commit message. The commit log stays thin; the narrative lives in `journal/`. (Observed in session 3, 2026-04-19 — first on a single multiline `-m`, then on a very long multi-`-m` body.)
 - **Diagnostic discipline when a call doesn't return:** before retrying, run a **read-only check** (`git log --oneline -3`, `git status --short`) to find out whether the call actually ran. The harness can drop tool calls silently, without an error. Retrying the same broken shape without checking state is how ten minutes of confusion happens. Also: trust the builder when they say "you're stuck" — the outside view catches drops the inside view can't see.
 
 ---
@@ -210,7 +211,7 @@ The map is symmetric: changes in either direction can cause drift. Walk the dire
 | `README.md` | `STATUS.md` (note what changed in the north star and why) |
 | Any file | `journal/session-notes.md` — add a quick note (see below) |
 
-**Intra-session drift is a real failure mode.** When requirements and schema (or design and schema) are co-produced in the same session, it's tempting to treat both as "what we just wrote" and skip the reconciliation walk. Don't. Requirements added late in a session still need the schema doc written earlier in the session to be brought into alignment before session close. See [COE 2026-04-20 — requirements-to-schema drift](../../journal/coe/2026-04-20-requirements-to-schema-drift.md) for the failure that made this explicit.
+**Intra-session drift is a real failure mode.** When requirements and schema (or design and schema) are co-produced in the same session, it's tempting to treat both as "what we just wrote" and skip the reconciliation walk. Don't. Requirements added late in a session still need the schema doc written earlier in the session to be brought into alignment before session close. See [COE 2026-04-19 — requirements-to-schema drift](../../journal/coe/2026-04-19-requirements-to-schema-drift.md) for the failure that made this explicit.
 
 **Session notes — the journal scratch pad:**
 

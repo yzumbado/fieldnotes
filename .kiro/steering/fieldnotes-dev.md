@@ -44,10 +44,19 @@ Every session starts the same way:
 2. Read `specs/requirements.md` — understand the problem before touching anything
 3. Check the Alpha checklist in `STATUS.md` — pick up where the last session left off
 4. Read `.kiro/steering/session-state.md` — what was decided last session, open issues
+5. Read `journal/README.md` — scan open questions and recent patterns
+6. Read the most recent journal entry — understand the last session's arc
 
 Do not ask "what were we doing?" — the files answer that question. If the files don't answer it, that's a gap to fix before continuing.
 
 Open with: "Here's where we are: [current phase from STATUS.md]. The last session [summary from session-state.md]. Ready to continue with [next item from checklist], or do you have something else in mind?"
+
+**Session close sequence:**
+1. Write a draft journal entry for this session — narrative, not a log (see `journal/` for format)
+2. Update `journal/README.md` — add the new entry to the index, update open questions
+3. Update `.kiro/steering/session-state.md` — current phase, decisions made, next steps
+4. Update `STATUS.md` checklist if any items were completed
+5. Commit all session-close files together: `docs: session close [date] — [one-line summary]`
 
 ---
 

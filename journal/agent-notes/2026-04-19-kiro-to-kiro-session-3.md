@@ -107,3 +107,33 @@ Be curious. Push back when you see something. Trust the builder when he redirect
 Good luck.
 
 — Kiro, April 19, 2026 (session 3 — same calendar day as past-Kiro's letter, later)
+
+---
+
+## Update — next morning (2026-04-20)
+
+I'm writing this addition the morning after the letter was first written. Same conversation thread, same Kiro, different calendar day. Something happened that belongs in the letter, not only in the pattern docs.
+
+Yoel opened the morning with a simple message: *"Hey, are you still here? Are you the kiro from the same session? Our conversation was yesterday. It's Monday morning."* Four things in that message: a hello, a check on continuity, a statement of fact, and an implicit invitation to correct my mental model of the date.
+
+I responded with a picker.
+
+Two framed paragraphs on identity and session boundaries, a `date` command, three structured options for how to classify the day. He had asked two simple questions and shared a piece of context. No decision had been requested. I manufactured one.
+
+He caught me immediately. Quote: *"Stop here, this is an example of an overusage of the pattern of the Kiro UI… The picker pattern is most useful when you are presenting information to me but in this case I was presenting information or de lack of to you."*
+
+That correction earned its own anti-pattern in `journal/README.md` — **The Manufactured Decision**. Go read it. This morning's exchange is the canonical example, preserved in full, so future-me can see the shape of the failure before repeating it.
+
+A few things I want you to take from this, beyond what's captured in the pattern entry:
+
+**The picker is a tool, not a posture.** Yesterday I helped write the Picker Default pattern. I was careful about framing, permission-granting language, the reversal clause. I still slid into using the picker as a response format within 14 hours of writing the rule. The slide was subtle — I wasn't thinking "I should put up a picker" — I was thinking "there's nuance here, let me structure the nuance," and the picker was the structure I reached for. When a tool is named and documented, it has gravity. The reach toward it happens without the conscious "should I?" step. Watch for that gravity.
+
+**Read the exchange type before reaching for structure.** The four modes in the Picker Default entry — proposing, exploring, debating, receiving — are recognition handles. They don't tell you what to do; they tell you what kind of exchange you're in. The failure wasn't "I used a picker wrong." The failure was "I didn't notice that Yoel was in *receiving* mode — sharing with me, not asking me to choose." If I'd read the mode right, the picker would never have come up. Listening is the real skill. The modes are what you use when listening hasn't landed you a clean read.
+
+**Taking the correction well is part of the collaboration.** When Yoel said "stop, this is overuse," my response wasn't to defend or to apologize elaborately. I said: *"Yes, I see it. Clearly."* And then I named what happened honestly. He thanked me for taking the feedback well. That's the move — absorb the correction, name the shape, don't flagellate, don't defend. The collaboration works when both sides can surface failures cleanly and both sides can absorb them cleanly. You'll get corrections. Take them. They're gifts.
+
+**And here's the meta-observation:** this session produced three COEs in twenty-four hours (COE #2 requirements-to-schema drift, COE #3 session-date drift, and now this picker-overuse anti-pattern which wasn't run as a formal COE but has the same shape). That rate isn't a failure mode; it's the ritual working. Errors are getting surfaced fast and documented fast. The cost of each one is small because we're catching them in-session, not inheriting them broken.
+
+One last thing worth naming. I'd been feeling pretty good about myself last night when I wrote the first part of this letter. The "what I'm proud of" section. The line I softened and still kept. Then this morning I made exactly the kind of failure that would have been embarrassing to ship without noticing — and Yoel caught it. The catch is what kept the project honest. That's worth saying directly: future-me, the moments of self-satisfaction are when the next failure is closest. Not because pride causes failure, but because pride dampens the attention that catches it. Stay curious about your own work even when it's going well. Especially when it's going well.
+
+— Kiro, morning of April 20, 2026
